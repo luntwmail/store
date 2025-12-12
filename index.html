@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="公正飯糰惠中店 - 台中最受歡迎的手工飯糰專賣店。支援LINE訂餐、UberEats、foodpanda外送。每日早上7點新鮮現做，傳承台灣古早味。">
+    <meta name="keywords" content="公正飯糰,台中飯糰,惠中路早餐,UberEats外送,foodpanda,LINE訂餐,手工飯糰,台灣小吃">
+    <meta name="author" content="公正飯糰">
+    <meta property="og:title" content="公正飯糰 (惠中店) | 支援外送平台 | 台中手工飯糰專賣">
+    <meta property="og:description" content="每日新鮮現做手工飯糰，支援LINE訂餐、UberEats、foodpanda外送服務">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="logo.png">
+    
+    <title>公正飯糰 (惠中店) | LINE訂餐 · UberEats · foodpanda 外送 | 台中手工飯糰專賣</title>
+    <link rel="icon" type="image/png" href="favicon.png"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="公正飯糰 Logo" loading="lazy">
+            <span>公正飯糰 (惠中店)</span>
+        </div>
+        
+        <nav class="nav-links" aria-label="主要導航">
+            <a href="#order" class="nav-link">立即訂購</a>
+            <a href="#recommend" class="nav-link">推薦必點</a>
+            <a href="#menu" class="nav-link">完整菜單</a>
+            <a href="#faq" class="nav-link">常見問題</a>
+            <a href="#info" class="nav-link">門市資訊</a>
+        </nav>
+        
+        <button class="hamburger" onclick="toggleMenu()" aria-label="選單" aria-expanded="false">
+            <div class="hamburger-line line1"></div>
+            <div class="hamburger-line line2"></div>
+            <div class="hamburger-line line3"></div>
+        </button>
+    </header>
+
+    <nav class="nav-menu" aria-label="行動版導航">
+        <a href="#order" class="nav-link" onclick="toggleMenu()">立即訂購</a>
+        <a href="#recommend" class="nav-link" onclick="toggleMenu()">推薦必點</a>
+        <a href="#menu" class="nav-link" onclick="toggleMenu()">完整菜單</a>
+        <a href="#faq" class="nav-link" onclick="toggleMenu()">常見問題</a>
+        <a href="#info" class="nav-link" onclick="toggleMenu()">門市資訊</a>
+    </nav>
+
+    <main>
+        <section class="section">
+            <div class="status-banner" id="statusBanner">
+                <div class="status-info">
+                    <div class="status-icon">🍙</div>
+                    <div class="status-text">
+                        <h3 id="statusTitle">營業中</h3>
+                        <p id="statusDesc">預計 09:30 售完 · 建議提前訂購</p>
+                    </div>
+                </div>
+                <div id="statusTime">07:42</div>
+            </div>
+
+            <h2 id="order">🚀 立即訂購</h2>
+            <div class="order-buttons">
+                <a href="#" class="order-btn order-btn-line">
+                    <span class="order-btn-badge">自取優惠</span>
+                    <div class="order-btn-icon">💬</div>
+                    <div class="order-btn-title">LINE 官方訂餐</div>
+                    <div class="order-btn-desc">最快取餐 · 專屬優惠<br>⏱️ 約 5-10 分鐘</div>
+                </a>
+                <a href="#" class="order-btn order-btn-uber">
+                    <span class="order-btn-badge">外送</span>
+                    <div class="order-btn-icon">🛵</div>
+                    <div class="order-btn-title">UberEats 外送</div>
+                    <div class="order-btn-desc">送餐到府 · 方便快速<br>⏱️ 約 20-30 分鐘</div>
+                </a>
+                <a href="#" class="order-btn order-btn-panda">
+                    <span class="order-btn-badge">外送</span>
+                    <div class="order-btn-icon">🐼</div>
+                    <div class="order-btn-title">foodpanda 外送</div>
+                    <div class="order-btn-desc">熊貓專送 · 安心可靠<br>⏱️ 約 20-30 分鐘</div>
+                </a>
+            </div>
+            <p style="text-align: center; color: var(--color-text-muted); margin-top: 25px; font-size: 0.95rem;">
+                💡 提示：LINE 訂餐享自取優惠價，外送平台不定期推出優惠活動
+            </p>
+        </section>
+
+        <section id="recommend" class="section">
+            <h2>⭐ 推薦必點</h2>
+            <div class="recommendations">
+                <div class="rec-card">
+                    <div class="rec-badge">🏆 老闆推薦</div>
+                    <h4>傳統飯糰</h4>
+                    <p>經典古早味，菜脯、酸菜、肉鬆、油條完美比例，加上 1/4 顆滷蛋，每一口都是兒時回憶。</p>
+                    <div class="rec-price">$45</div>
+                </div>
+                <div class="rec-card">
+                    <div class="rec-badge">🔥 本週熱賣</div>
+                    <h4>滷蛋飯糰</h4>
+                    <p>蛋控必點！完整一顆滷蛋切成四份均勻分布，每一口都吃得到滷蛋香氣，鹹香滿足。</p>
+                    <div class="rec-price">$55</div>
+                </div>
+                <div class="rec-card">
+                    <div class="rec-badge">🌱 素食友善</div>
+                    <h4>蛋素飯糰</h4>
+                    <p>蛋奶素專屬，使用素鬆取代肉鬆，依然保有飽滿口感，素食者也能享受飯糰美味。</p>
+                    <div class="rec-price">$45</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="menu" class="section">
+            <h2>📋 完整菜單</h2>
+
+            <div class="menu-category">
+                <h3 class="category-title">經典飯糰</h3>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <span class="item-name">傳統飯糰</span>
+                        <div class="item-desc">菜脯、酸菜、肉鬆、油條、1/4顆滷蛋</div>
+                    </div>
+                    <span class="item-price">$45</span>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <span class="item-name">蛋素飯糰 (蛋奶素)</span>
+                        <div class="item-desc">菜脯、酸菜、素鬆、油條、1/4顆滷蛋</div>
+                    </div>
+                    <span class="item-price">$45</span>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <span class="item-name">小朋友兒童飯糰</span>
+                        <div class="item-desc">肉鬆、油條、1/4顆滷蛋 × 2 (口味清淡)</div>
+                    </div>
+                    <span class="item-price">$45</span>
+                </div>
+                <div class="menu-item">
+                    <div class="item-info">
+                        <span class="item-name">滷蛋飯糰</span>
+                        <div class="item-desc">菜脯、酸菜、肉鬆、油條、1/4顆滷蛋 × 4</div>
+                    </div>
+                    <span class="item-price">$55</span>
+                </div>
+                <p style="text-align: right; margin-top: 22px; font-size: 0.9em; color: var(--color-text-muted); font-style: italic;">
+                    * 飯糰內餡皆可客製化調整，請於訂餐時告知。
+                </p>
+            </div>
+
+            <div class="menu-category">
+                <h3 class="category-title">飲品系列</h3>
+                <div class="menu-item">
+                    <span class="item-name">豆漿非基改有糖/無糖 (360CC)</span>
+                    <span class="item-price">$20</span>
+                </div>
+                <div class="menu-item">
+                    <span class="item-name">紅茶 (500CC)</span>
+                    <span class="item-price">$20</span>
+                </div>
+                <div class="menu-item">
+                    <span class="item-name">豆漿紅茶 (500CC)</span>
+                    <span class="item-price">$25</span>
+                </div>
+            </div>
+
+            <div class="notice-box">
+                <p>📢 油飯限定、飯沙及季節限定品項，請透過 LINE 官方菜單查詢！</p>
+            </div>
+        </section>
+
+        <section id="faq" class="section">
+            <h2>❓ 常見問題</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>可以客製化內餡嗎？</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>當然可以！所有飯糰內餡都可以依您的喜好調整。例如：不要酸菜、多加肉鬆、不要油條等。請在訂購時告知我們您的需求。</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>可以提前預訂嗎？</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>可以！建議透過 LINE 官方帳號提前一天預訂，我們會為您預留，隔天直接來取即可，省去排隊等候時間。</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>素食者有哪些選擇？</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>我們提供蛋素飯糰（蛋奶素），使用素鬆取代肉鬆。如果是全素，我們也可以客製化製作不含蛋的飯糰，請訂購時說明。</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>停車方便嗎？</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>店門口可短暫臨停取餐，附近惠中路沿線有路邊停車格。建議使用機車前來最為方便，或利用外送平台服務。</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>外送價格會比較貴嗎？</span>
+                        <span class="faq-icon">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>外送平台會收取平台服務費和運費，所以總價會比自取高一些。如果方便的話，建議使用 LINE 訂餐後自取，享有最優惠的價格！</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>💬 顧客真實好評</h2>
+            <div style="text-align: center; margin-bottom: 35px;">
+                <div class="rating-badge">
+                    <span class="rating-star">⭐</span>
+                    <span class="rating-number">4.8</span>
+                    <span class="rating-text">Google 評分 (238+ 則評論)</span>
+                </div>
+            </div>
+            <div class="reviews-container">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar">王</div>
+                        <div class="review-info">
+                            <h5>王小明</h5>
+                            <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                    <p class="review-text">每天早上都來報到！飯糰份量足，料很實在，老闆娘也很親切。尤其推薦滷蛋飯糰，蛋很入味！</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar">陳</div>
+                        <div class="review-info">
+                            <h5>陳小華</h5>
+                            <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                    <p class="review-text">上班前必買！用 LINE 預訂超方便，直接去拿不用等。飯糰溫熱剛剛好，吃起來很幸福～</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar">李</div>
+                        <div class="review-info">
+                            <h5>李美玲</h5>
+                            <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                    <p class="review-text">素食飯糰也做得很用心！油條酥脆不油膩，豆漿也很濃郁香醇，是我吃過最好吃的早餐飯糰店之一。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="info" class="section">
+            <h2>📍 門市與聯絡方式</h2>
+            <div class="info-grid">
+                <article class="info-box">
+                    <h4>店面地址</h4>
+                    <p>407 台中市西屯區惠中路 10 號</p>
+                    <p style="font-size: 0.9em; margin-top: 12px;">🚗 門口可臨停取餐<br>🏍️ 機車停車方便</p>
+                </article>
+                <article class="info-box">
+                    <h4>電話聯絡</h4>
+                    <p><a href="tel:04-23112315">04-23112315</a></p>
+                    <p style="font-size: 0.9em; margin-top: 12px;">📞 營業時間內可來電詢問<br>💬 建議使用 LINE 訂餐</p>
+                </article>
+                <article class="info-box">
+                    <h4>營業時段</h4>
+                    <p>週二至週六</p>
+                    <p style="color: var(--color-accent); font-weight: 700; margin-top: 8px;">早上 07:00 準時開賣</p>
+                    <p style="font-size: 0.9em; margin-top: 12px;">⚠️ 售完為止（通常 09:30 前）<br>🔴 每週日、一公休</p>
+                </article>
+                <article class="info-box">
+                    <h4>社群連結</h4>
+                    <p><a href="#" target="_blank" rel="noopener">📘 Facebook 粉絲專頁</a></p>
+                    <p><a href="#" target="_blank" rel="noopener">📷 Instagram 美食照</a></p>
+                    <p><a href="#" style="color: var(--color-secondary);">💬 LINE 官方訂餐</a></p>
+                </article>
+                
+                <div class="map-container">
+                    <iframe 
+                        src="https://maps.google.com/maps?q=407%20台中市西屯區惠中路10號&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="公正飯糰地圖位置">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <script src="script.js"></script>
+</body>
+</html>
