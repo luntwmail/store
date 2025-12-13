@@ -67,15 +67,15 @@ function updateStatus() {
         return;
     }
     
-    // 營業時間判斷（週二至週六 07:00-09:30）
+    // 營業時間判斷（週二至週六 07:00-12:00，售完為止）
     if (hour < 7) {
         statusBanner.classList.add('closed');
         statusTitle.textContent = '尚未營業';
         statusDesc.textContent = `今日 07:00 開始營業 · 請稍後`;
-    } else if (hour === 7 || (hour === 8) || (hour === 9 && minute < 30)) {
+    } else if (hour >= 7 && hour < 12) {
         statusBanner.classList.remove('closed');
         statusTitle.textContent = '🔥 營業中';
-        statusDesc.textContent = '預計 09:30 售完 · 建議提前訂購';
+        statusDesc.textContent = '07:00-12:00 營業 · 售完為止';
     } else {
         statusBanner.classList.add('closed');
         statusTitle.textContent = '今日已售完';
@@ -185,4 +185,114 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', createParticles);
 } else {
     createParticles();
+}
+
+// ===== 精緻輪播 Banner 功能 =====
+let currentSlide = 0;
+let slideInterval;
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+const totalSlides = slides.length;
+
+// 顯示指定的幻燈片
+function showSlide(index) {
+    // 處理索引邊界
+    if (index >= totalSlides) {
+        currentSlide = 0;
+    } else if (index < 0) {
+        currentSlide = totalSlides - 1;
+    } else {
+        currentSlide = index;
+    }
+    
+    // 更新所有幻燈片的狀態
+    slides.forEach((slide, i) => {
+        slide.classList.remove('active', 'prev');
+        if (i === currentSlide) {
+            slide.classList.add('active');
+        } else if (i < currentSlide) {
+            slide.classList.add('prev');
+        }
+    });
+    
+    // 更新指示點
+    dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentSlide);
+    });
+}
+
+// 移動到下一張/上一張
+function moveSlide(direction) {
+    showSlide(currentSlide + direction);
+    resetSlideInterval(); // 重置自動播放計時器
+}
+
+// 直接跳到指定張
+function goToSlide(index) {
+    showSlide(index);
+    resetSlideInterval(); // 重置自動播放計時器
+}
+
+// 自動播放
+function startSlideShow() {
+    slideInterval = setInterval(() => {
+        showSlide(currentSlide + 1);
+    }, 5000); // 每5秒切換一次
+}
+
+// 重置自動播放計時器
+function resetSlideInterval() {
+    clearInterval(slideInterval);
+    startSlideShow();
+}
+
+// 初始化輪播
+function initSlider() {
+    if (slides.length > 0) {
+        showSlide(0);
+        startSlideShow();
+        
+        // 觸控滑動支援（手機版）
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        const slider = document.querySelector('.hero-slider');
+        if (slider) {
+            slider.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+            
+            slider.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, { passive: true });
+        }
+        
+        function handleSwipe() {
+            const swipeThreshold = 50; // 最小滑動距離
+            if (touchEndX < touchStartX - swipeThreshold) {
+                // 向左滑動 - 下一張
+                moveSlide(1);
+            } else if (touchEndX > touchStartX + swipeThreshold) {
+                // 向右滑動 - 上一張
+                moveSlide(-1);
+            }
+        }
+        
+        // 滑鼠懸停時暫停自動播放
+        slider.addEventListener('mouseenter', () => {
+            clearInterval(slideInterval);
+        });
+        
+        slider.addEventListener('mouseleave', () => {
+            startSlideShow();
+        });
+    }
+}
+
+// 當DOM載入完成後初始化
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSlider);
+} else {
+    initSlider();
 }

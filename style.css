@@ -163,3 +163,417 @@
     }
 }
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+/* ========================================
+   精緻輪播 Banner 樣式
+   ======================================== */
+
+.hero-slider {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    background: var(--color-bg-light);
+    box-shadow: 0 4px 20px rgba(93, 64, 55, 0.1);
+}
+
+.slider-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8%;
+}
+
+.slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    z-index: 1;
+}
+
+.slide.prev {
+    transform: translateX(-100%);
+}
+
+.slide-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    width: 100%;
+    gap: 60px;
+    animation: slideContentFadeIn 1s ease-out;
+}
+
+@keyframes slideContentFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-text {
+    flex: 1;
+    color: white;
+    z-index: 2;
+}
+
+.slide-title {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    animation: titleSlideIn 0.8s ease-out 0.2s both;
+}
+
+@keyframes titleSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.slide-subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 35px;
+    opacity: 0.95;
+    line-height: 1.6;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    animation: subtitleSlideIn 0.8s ease-out 0.4s both;
+}
+
+@keyframes subtitleSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 0.95;
+        transform: translateX(0);
+    }
+}
+
+.slide-btn {
+    display: inline-block;
+    padding: 16px 40px;
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--color-secondary);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    animation: buttonSlideIn 0.8s ease-out 0.6s both;
+}
+
+@keyframes buttonSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-btn:hover {
+    background: white;
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.slide-btn:active {
+    transform: translateY(-2px) scale(1.02);
+}
+
+.slide-image {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: imageFloat 3s ease-in-out infinite;
+}
+
+@keyframes imageFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.image-placeholder {
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+/* 輪播控制按鈕 */
+.slider-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10;
+    color: var(--color-secondary);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.slider-nav:hover {
+    background: white;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.slider-nav:active {
+    transform: translateY(-50%) scale(1.05);
+}
+
+.slider-prev {
+    left: 30px;
+}
+
+.slider-next {
+    right: 30px;
+}
+
+/* 指示點 */
+.slider-dots {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 10;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dot:hover {
+    background: rgba(255, 255, 255, 0.8);
+    transform: scale(1.2);
+}
+
+.dot.active {
+    background: white;
+    width: 32px;
+    border-radius: 6px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* 響應式設計 - 平板 */
+@media (max-width: 1024px) {
+    .hero-slider {
+        height: 450px;
+    }
+    
+    .slide-content {
+        gap: 40px;
+    }
+    
+    .slide-title {
+        font-size: 2.5rem;
+    }
+    
+    .slide-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .image-placeholder {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .image-placeholder span {
+        font-size: 100px !important;
+    }
+}
+
+/* 響應式設計 - 手機 */
+@media (max-width: 768px) {
+    .hero-slider {
+        height: 380px;
+    }
+    
+    .slide {
+        padding: 0 5%;
+    }
+    
+    .slide-content {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+    }
+    
+    .slide-text {
+        order: 2;
+    }
+    
+    .slide-image {
+        order: 1;
+    }
+    
+    .slide-title {
+        font-size: 2rem;
+        margin-bottom: 15px;
+    }
+    
+    .slide-subtitle {
+        font-size: 1rem;
+        margin-bottom: 25px;
+    }
+    
+    .slide-btn {
+        padding: 14px 32px;
+        font-size: 1rem;
+    }
+    
+    .image-placeholder {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .image-placeholder span {
+        font-size: 80px !important;
+    }
+    
+    .slider-nav {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .slider-prev {
+        left: 15px;
+    }
+    
+    .slider-next {
+        right: 15px;
+    }
+    
+    .slider-dots {
+        bottom: 20px;
+        gap: 8px;
+    }
+    
+    .dot {
+        width: 10px;
+        height: 10px;
+    }
+    
+    .dot.active {
+        width: 24px;
+    }
+}
+
+/* 動畫優化 - 尊重使用者偏好 */
+@media (prefers-reduced-motion: reduce) {
+    .slide,
+    .slide-content,
+    .slide-title,
+    .slide-subtitle,
+    .slide-btn,
+    .slide-image {
+        animation: none !important;
+        transition: opacity 0.3s ease !important;
+    }
+}
+
+/* ========================================
+   純圖片輪播樣式更新
+   ======================================== */
+
+/* 圖片輪播專用樣式 */
+.slide-image-full {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+/* 簡化 slide 樣式 - 移除不必要的佈局 */
+.slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: var(--color-bg-light);
+}
+
+/* 隱藏原本的文字內容樣式（不再需要） */
+.slide-content,
+.slide-text,
+.slide-title,
+.slide-subtitle,
+.slide-btn,
+.slide-image,
+.image-placeholder {
+    display: none;
+}
+
+/* 確保圖片全寬顯示 */
+.slide-image-full {
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

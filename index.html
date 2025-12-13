@@ -10,11 +10,11 @@
     <meta property="og:description" content="每日新鮮現做手工飯糰，支援LINE訂餐、UberEats、foodpanda外送服務">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://luntwmail.github.io/store/">
-    <meta property="og:image" content="https://luntwmail.github.io/store/logo.png">
+    <meta property="og:image" content="https://luntwmail.github.io/store/img/logo.png">
     <link rel="canonical" href="https://luntwmail.github.io/store/">
     
     <title>公正飯糰 (惠中店) | LINE訂餐 · UberEats · foodpanda 外送 | 台中手工飯糰專賣</title>
-    <link rel="icon" type="image/png" href="favicon.png"> 
+    <link rel="icon" type="image/png" href="img/favicon.png"> 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@600;900&display=swap" rel="stylesheet">
@@ -23,7 +23,7 @@
 <body>
     <header class="navbar">
         <div class="logo">
-            <img src="logo.png" alt="公正飯糰 Logo" loading="lazy">
+            <img src="img/logo.png" alt="公正飯糰 Logo" loading="lazy">
             <span>公正飯糰 (惠中店)</span>
         </div>
         
@@ -50,6 +50,51 @@
         <a href="#info" class="nav-link" onclick="toggleMenu()">門市資訊</a>
     </nav>
 
+    <!-- 精緻輪播 Banner -->
+    <section class="hero-slider" id="heroSlider">
+        <div class="slider-container">
+            <!-- 輪播圖片 1 -->
+            <div class="slide active">
+                <img src="img/banner-1.png" alt="公正飯糰宣傳圖1" class="slide-image-full">
+            </div>
+
+            <!-- 輪播圖片 2 -->
+            <div class="slide">
+                <img src="img/banner-2.png" alt="公正飯糰宣傳圖2" class="slide-image-full">
+            </div>
+
+            <!-- 輪播圖片 3 -->
+            <div class="slide">
+                <img src="img/banner-3.png" alt="公正飯糰宣傳圖3" class="slide-image-full">
+            </div>
+
+            <!-- 輪播圖片 4 -->
+            <div class="slide">
+                <img src="img/banner-4.png" alt="公正飯糰宣傳圖4" class="slide-image-full">
+            </div>
+        </div>
+
+        <!-- 輪播控制按鈕 -->
+        <button class="slider-nav slider-prev" onclick="moveSlide(-1)" aria-label="上一張">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+        <button class="slider-nav slider-next" onclick="moveSlide(1)" aria-label="下一張">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+
+        <!-- 指示點 -->
+        <div class="slider-dots">
+            <span class="dot active" onclick="goToSlide(0)"></span>
+            <span class="dot" onclick="goToSlide(1)"></span>
+            <span class="dot" onclick="goToSlide(2)"></span>
+            <span class="dot" onclick="goToSlide(3)"></span>
+        </div>
+    </section>
+
     <main>
         <section class="section">
             <div class="status-banner" id="statusBanner" data-particles="true">
@@ -68,7 +113,7 @@
                 <a href="https://lin.ee/XXilk36" target="_blank" rel="noopener noreferrer" class="order-btn order-btn-line">
                     <span class="order-btn-badge">自取優惠</span>
                     <div class="order-btn-icon">
-                        <img src="line-icon.png" alt="LINE" style="width: 48px; height: 48px; object-fit: contain;">
+                        <img src="img/line-icon.png" alt="LINE" style="width: 48px; height: 48px; object-fit: contain;">
                     </div>
                     <div class="order-btn-title">LINE 官方訂餐</div>
                     <div class="order-btn-desc">最快取餐 · 專屬優惠<br>約 5-10 分鐘</div>
@@ -76,7 +121,7 @@
                 <a href="https://www.ubereats.com/tw/store/%E5%85%AC%E6%AD%A3%E9%A3%AF%E7%B3%B0-%E6%83%A0%E4%B8%AD%E5%BA%97/GotWILjpV_-Wn7GcYxcwdA?ps=1" target="_blank" rel="noopener noreferrer" class="order-btn order-btn-uber">
                     <span class="order-btn-badge">外送</span>
                     <div class="order-btn-icon">
-                        <img src="uber-icon.png" alt="UberEats" style="width: 48px; height: 48px; object-fit: contain;">
+                        <img src="img/uber-icon.png" alt="UberEats" style="width: 48px; height: 48px; object-fit: contain;">
                     </div>
                     <div class="order-btn-title">UberEats 外送</div>
                     <div class="order-btn-desc">送餐到府 · 方便快速<br>約 20-30 分鐘</div>
@@ -84,7 +129,7 @@
                 <a href="https://linktr.ee/gongzheng.huizhong" target="_blank" rel="noopener noreferrer" class="order-btn order-btn-panda">
                     <span class="order-btn-badge">外送</span>
                     <div class="order-btn-icon">
-                        <img src="panda-icon.png" alt="foodpanda" style="width: 48px; height: 48px; object-fit: contain;">
+                        <img src="img/panda-icon.png" alt="foodpanda" style="width: 48px; height: 48px; object-fit: contain;">
                     </div>
                     <div class="order-btn-title">foodpanda 外送</div>
                     <div class="order-btn-desc">即將上線 · 敬請期待<br>目前請使用其他管道</div>
@@ -288,8 +333,8 @@
                 <article class="info-box">
                     <h4>營業時段</h4>
                     <p>週二至週六</p>
-                    <p style="color: var(--color-accent); font-weight: 700; margin-top: 8px;">早上 07:00 準時開賣</p>
-                    <p style="font-size: 0.9em; margin-top: 12px;">售完為止（通常 09:30 前）<br>每週日、一公休</p>
+                    <p style="color: var(--color-accent); font-weight: 700; margin-top: 8px;">早上 07:00 - 中午 12:00</p>
+                    <p style="font-size: 0.9em; margin-top: 12px;">售完為止不另行公告<br>每週日、一公休</p>
                 </article>
                 <article class="info-box">
                     <h4>社群連結</h4>
