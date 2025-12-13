@@ -445,7 +445,8 @@
 /* 響應式設計 - 手機 */
 @media (max-width: 768px) {
     .hero-slider {
-        height: 280px;  /* 手機版降低高度，更適合直式圖片 */
+        height: 100vw;  /* 手機版使用視窗寬度，完美顯示正方形圖片 */
+        max-height: 500px;  /* 限制最大高度，避免太高 */
     }
     
     .slide {
