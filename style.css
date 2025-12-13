@@ -445,11 +445,11 @@
 /* 響應式設計 - 手機 */
 @media (max-width: 768px) {
     .hero-slider {
-        height: 380px;
+        height: 280px;  /* 手機版降低高度，更適合直式圖片 */
     }
     
     .slide {
-        padding: 0 5%;
+        padding: 0;  /* 移除 padding，讓圖片完整顯示 */
     }
     
     .slide-content {
@@ -586,4 +586,21 @@
     to {
         opacity: 1;
     }
+}
+
+/* ========================================
+   響應式圖片 (picture 元素) 樣式優化
+   ======================================== */
+
+picture {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+picture img {
+    width: 100%;
+    height: 100%;
 }
