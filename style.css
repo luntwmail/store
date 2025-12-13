@@ -176,6 +176,19 @@
     box-shadow: 0 4px 20px rgba(93, 64, 55, 0.1);
 }
 
+/* 桌面版：浮動效果，兩側留白 */
+@media (min-width: 1024px) {
+    .hero-slider {
+        width: calc(100% - 80px);  /* 左右各留 40px */
+        margin: 20px auto;  /* 上下留 20px，水平置中 */
+        border-radius: 24px;  /* 圓角，更有設計感 */
+        box-shadow: 
+            0 8px 32px rgba(93, 64, 55, 0.12),  /* 主陰影 */
+            0 2px 8px rgba(0, 0, 0, 0.08),       /* 次陰影 */
+            0 0 0 1px rgba(255, 255, 255, 0.8);  /* 白色邊框光暈 */
+    }
+}
+
 .slider-container {
     position: relative;
     width: 100%;
@@ -548,6 +561,13 @@
     image-rendering: crisp-edges;
     backface-visibility: hidden;
     -webkit-font-smoothing: subpixel-antialiased;
+}
+
+/* 桌面版：圖片也要圓角 */
+@media (min-width: 1024px) {
+    .slide-image-full {
+        border-radius: 24px;  /* 配合容器圓角 */
+    }
 }
 
 /* 簡化 slide 樣式 - 移除不必要的佈局 */
