@@ -234,15 +234,26 @@ function goToSlide(index) {
 }
 
 // 自動播放
+const SLIDE_INTERVAL_TIME = 5000; // 5秒切換一次
+
 function startSlideShow() {
+    // 確保先清除任何現有的計時器
+    if (slideInterval) {
+        clearInterval(slideInterval);
+    }
+    
     slideInterval = setInterval(() => {
         showSlide(currentSlide + 1);
-    }, 5000); // 每5秒切換一次
+    }, SLIDE_INTERVAL_TIME);
 }
 
 // 重置自動播放計時器
 function resetSlideInterval() {
-    clearInterval(slideInterval);
+    // 清除現有計時器
+    if (slideInterval) {
+        clearInterval(slideInterval);
+    }
+    // 重新開始完整的5秒計時
     startSlideShow();
 }
 
