@@ -286,6 +286,12 @@ class MagneticSlider {
         
         // 更新所有 slides
         this.slides.forEach((slide, i) => {
+            // 手機版使用 display 切換以撐開高度
+            if (window.innerWidth <= 768) {
+                slide.style.display = (i === index) ? 'block' : 'none';
+                slide.style.position = 'relative';
+            }
+            
             slide.classList.remove('active', 'prev');
             if (i === index) {
                 slide.classList.add('active');

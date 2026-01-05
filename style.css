@@ -284,7 +284,8 @@
         max-width: calc(100% - 30px);  /* 左右各留 15px */
         margin: 0 auto;  /* 居中 */
         height: auto;  /* 改為 auto */
-        min-height: 300px;
+        min-height: auto;  /* 讓容器高度由內容決定 */
+        aspect-ratio: auto;  /* 確保不強制比例 */
         padding: 0 18px;  /* 只保留左右 padding */
         border-radius: 20px;
     }
@@ -303,7 +304,7 @@
         max-width: calc(100% - 24px);  /* 左右各留 12px */
         margin: 0 auto;  /* 居中 */
         height: auto;  /* 改為 auto */
-        min-height: 250px;
+        min-height: auto;  /* 讓容器高度由內容決定 */
         padding: 0 15px;  /* 只保留左右 padding */
     }
     
@@ -664,16 +665,17 @@
 /* 手機版 */
 @media (max-width: 767px) {
     .slider-dots {
-        bottom: 20px;  /* 增加底部距離 */
-        gap: 5px;
-        padding: 5px 10px;  /* 更小的padding */
+        bottom: 10px;  /* 距離圖片下邊緣 10px */
+        gap: 6px;
+        padding: 4px 10px;
+        background: rgba(0, 0, 0, 0.3);  /* 稍微加深背景確保在淺色圖上清晰 */
     }
 }
 
 /* 極小螢幕 */
 @media (max-width: 400px) {
     .slider-dots {
-        bottom: 16px;  /* 增加底部距離 */
+        bottom: 8px;  /* 極小螢幕更貼近底部 */
         gap: 4px;
         padding: 4px 8px;
     }
@@ -684,7 +686,7 @@
     }
     
     .dot.active {
-        width: 16px;
+        width: 18px;  /* 稍微縮短長度，保持比例 */
     }
 }
 
@@ -748,12 +750,21 @@
 /* 響應式設計 - 手機 */
 @media (max-width: 768px) {
     .hero-slider {
-        height: 500px;  /* 手機版高度 */
-        max-height: 600px;
+        height: auto;  /* 取消固定高度，讓圖片撐開 */
+        max-height: none;  /* 取消最大高度限制 */
+        padding: 20px 0;  /* 給予上下適度留白 */
     }
     
     .slide {
         padding: 0;
+        position: relative;  /* 改為 relative 讓第一張圖片能撐開高度 */
+        display: none;  /* 先隱藏所有 slide */
+        min-height: auto;  /* 移除最小高度限制 */
+    }
+    
+    .slide.active {
+        display: block;  /* 只顯示當前 slide，並撐開高度 */
+        opacity: 1;
     }
     
     .slide-content {
@@ -808,8 +819,9 @@
     }
     
     .slider-dots {
-        bottom: 20px;
-        gap: 8px;
+        bottom: 16px;  /* 平板版也調降 */
+        gap: 7px;
+        padding: 6px 12px;
     }
     
     .dot {
@@ -824,7 +836,7 @@
     }
     
     .dot.active {
-        width: 24px;
+        width: 22px;  /* 平板版稍微調整 */
     }
 }
 
