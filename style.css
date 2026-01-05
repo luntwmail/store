@@ -170,49 +170,143 @@
 .hero-slider {
     position: relative;
     width: 100%;
-    height: 500px;
-    overflow: hidden;  /* 改回 hidden */
-    background: var(--color-bg-light);
+    height: auto;
+    overflow: visible;  /* 改為 visible 讓陰影可見 */
+    background: transparent;
+    padding: 40px 0 20px 0;  /* 下方減少留白 */
 }
 
-/* 桌面版：精緻效果 */
+/* 桌面版：柔和卡片風格 */
 @media (min-width: 1024px) {
     .hero-slider {
-        width: 100%;
-        margin: 0 auto 30px;  /* 下方改為 30px */
-        padding: 40px 0;
-        
-        /* 淡淡的玻璃質感背景 */
-        background: linear-gradient(
-            180deg,
-            rgba(253, 251, 247, 0.5) 0%,
-            rgba(248, 244, 238, 0.3) 100%
-        );
-        
-        /* 輕微的毛玻璃效果 */
-        backdrop-filter: blur(10px) saturate(120%);
-        -webkit-backdrop-filter: blur(10px) saturate(120%);
-        
-        /* 簡潔的陰影 */
-        box-shadow: 
-            0 0 0 1px rgba(0, 0, 0, 0.03),
-            0 10px 40px -5px rgba(93, 64, 55, 0.08);
+        padding: 50px 0 30px 0;  /* 桌面版下方也減少 */
+        margin-bottom: 20px;  /* 減少與下一區塊的間距 */
     }
 }
 
 .slider-container {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 500px;
     z-index: 2;
+    
+    /* 淺米白色背景 */
+    background: #faf8f3;
+    
+    /* 大圓角 */
+    border-radius: 32px;
+    
+    /* 柔和多層陰影 */
+    box-shadow: 
+        0 0 0 1px rgba(93, 64, 55, 0.08),
+        0 20px 60px -10px rgba(93, 64, 55, 0.12),
+        0 10px 30px -5px rgba(0, 0, 0, 0.08),
+        0 5px 15px -3px rgba(0, 0, 0, 0.05);
+    
+    overflow: visible;  /* 改為 visible，讓按鈕可以突出 */
+    
+    /* 內部留白 - 只保留左右 */
+    padding: 0 30px;
+    
+    /* 注意：這裡不設 display: flex，由內部的 wrapper 處理 */
 }
 
-/* 桌面版：圖片容器固定最大寬度 */
+/* 創建一個虛擬的內部包裝層 */
+.slider-container::before {
+    content: '';
+    position: absolute;
+    top: 0;  /* 貼齊頂部 */
+    left: 30px;
+    right: 30px;
+    bottom: 0;  /* 貼齊底部 */
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* 桌面版：更大更精緻 */
 @media (min-width: 1024px) {
     .slider-container {
         max-width: 1400px;
         margin: 0 auto;
-        padding: 0 40px;
+        height: 580px;
+        padding: 0 60px;  /* 只保留左右 padding，移除上下 */
+        border-radius: 40px;
+        
+        /* 桌面版更深的陰影 */
+        box-shadow: 
+            0 0 0 1px rgba(93, 64, 55, 0.06),
+            0 30px 80px -15px rgba(93, 64, 55, 0.15),
+            0 15px 40px -8px rgba(0, 0, 0, 0.1),
+            0 8px 20px -5px rgba(0, 0, 0, 0.06);
+    }
+    
+    .slider-container::before {
+        top: 0;  /* 貼齊頂部 */
+        left: 60px;
+        right: 60px;
+        bottom: 0;  /* 貼齊底部 */
+    }
+    
+    /* 懸停時微微提升 */
+    .hero-slider:hover .slider-container {
+        transform: translateY(-4px);
+        box-shadow: 
+            0 0 0 1px rgba(93, 64, 55, 0.08),
+            0 40px 100px -20px rgba(93, 64, 55, 0.18),
+            0 20px 50px -10px rgba(0, 0, 0, 0.12),
+            0 10px 25px -6px rgba(0, 0, 0, 0.08);
+    }
+}
+
+/* 平板 */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .slider-container {
+        max-width: 90%;  /* 使用百分比 */
+        margin: 0 auto;  /* 左右居中 */
+        height: 520px;
+        padding: 0 35px;  /* 只保留左右 padding */
+    }
+    
+    .slider-container::before {
+        top: 0;
+        left: 35px;
+        right: 35px;
+        bottom: 0;
+    }
+}
+
+/* 手機版 */
+@media (max-width: 767px) {
+    .slider-container {
+        max-width: calc(100% - 30px);  /* 左右各留 15px */
+        margin: 0 auto;  /* 居中 */
+        height: 360px;
+        padding: 0 18px;  /* 只保留左右 padding */
+        border-radius: 20px;
+    }
+    
+    .slider-container::before {
+        top: 0;
+        left: 18px;
+        right: 18px;
+        bottom: 0;
+    }
+}
+
+/* 極小螢幕優化 */
+@media (max-width: 400px) {
+    .slider-container {
+        max-width: calc(100% - 24px);  /* 左右各留 12px */
+        margin: 0 auto;  /* 居中 */
+        height: 320px;
+        padding: 0 15px;  /* 只保留左右 padding */
+    }
+    
+    .slider-container::before {
+        top: 0;
+        left: 15px;
+        right: 15px;
+        bottom: 0;
     }
 }
 
@@ -222,23 +316,37 @@
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0;
-    transform: translateX(100%);
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    opacity: 0;
+    pointer-events: none;  /* 預設不可點擊 */
+    transition: opacity 0.6s ease;
+    overflow: hidden;  /* 在這裡裁切圖片，保持圓角 */
+    border-radius: 24px;  /* 與圖片圓角一致 */
 }
 
 .slide.active {
     opacity: 1;
-    transform: translateX(0);
-    z-index: 1;
+    pointer-events: none;  /* 改為 none，讓點擊事件穿透 */
+    z-index: 2;
 }
 
 .slide.prev {
-    transform: translateX(-100%);
+    z-index: 1;
+}
+
+/* 確保 picture 元素填滿 slide */
+.slide picture {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;  /* picture 也設為 none */
 }
 
 .slide-content {
@@ -402,6 +510,13 @@
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 100;
     color: var(--color-secondary);
+    pointer-events: auto;  /* 確保可點擊 */
+    
+    /* 移除預設按鈕樣式 */
+    border: none;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;  /* 移除手機點擊高亮 */
+    touch-action: manipulation;  /* 優化觸控體驗 */
     
     /* 多層精緻陰影 */
     box-shadow: 
@@ -410,7 +525,11 @@
         0 4px 12px rgba(93, 64, 55, 0.1),
         0 0 40px -10px rgba(255, 112, 67, 0.15);
     
-    opacity: 0.85;
+    opacity: 0.95;  /* 提高不透明度 */
+}
+
+.slider-nav:active {
+    transform: translateY(-50%) scale(0.95);  /* 點擊回饋 */
 }
 
 .slider-nav:hover {
@@ -434,120 +553,166 @@
     transform: translateY(-50%) scale(1.05);
 }
 
-/* 桌面版：按鈕在圖片容器內兩側 */
+/* 桌面版：按鈕在卡片內側兩側 */
 @media (min-width: 1024px) {
     .slider-prev {
-        left: 20px;  /* 圖片容器內左側 */
+        left: 20px;  /* 卡片內左側 */
     }
     
     .slider-next {
-        right: 20px;  /* 圖片容器內右側 */
+        right: 20px;  /* 卡片內右側 */
     }
     
     /* 懸停時按鈕放大 */
-    .slider-prev:hover {
-        transform: translateY(-50%) scale(1.12);
-    }
-    
+    .slider-prev:hover,
     .slider-next:hover {
         transform: translateY(-50%) scale(1.12);
     }
 }
 
-/* 平板和手機：按鈕在 Banner 內側但靠邊緣 */
-@media (max-width: 1023px) {
+/* 平板：按鈕在內側 */
+@media (min-width: 768px) and (max-width: 1023px) {
     .slider-prev {
-        left: 10px;  /* 緊貼左邊 */
+        left: 15px;
     }
     
     .slider-next {
-        right: 10px;  /* 緊貼右邊 */
+        right: 15px;
+    }
+}
+
+/* 手機版：按鈕在內側 */
+@media (max-width: 767px) {
+    .slider-prev {
+        left: 10px;  /* 改為正值，在內側 */
+    }
+    
+    .slider-next {
+        right: 10px;  /* 改為正值，在內側 */
     }
     
     /* 手機版按鈕稍小 */
     .slider-nav {
-        width: 40px;
-        height: 40px;
-        opacity: 0.8;  /* 稍微透明，減少遮擋 */
+        width: 38px;
+        height: 38px;
+        opacity: 0.9;
+    }
+    
+    .slider-nav svg {
+        width: 16px;
+        height: 16px;
     }
 }
 
-/* 指示點 */
+/* 極小螢幕：按鈕更小，在內側 */
+@media (max-width: 400px) {
+    .slider-nav {
+        width: 34px;
+        height: 34px;
+    }
+    
+    .slider-nav svg {
+        width: 14px;
+        height: 14px;
+    }
+    
+    .slider-prev {
+        left: 8px;  /* 改為正值，在內側 */
+    }
+    
+    .slider-next {
+        right: 8px;  /* 改為正值，在內側 */
+    }
+}
+
+/* 指示點 - iOS 風格浮動在卡片內底部 */
 .slider-dots {
     position: absolute;
-    bottom: 30px;
+    bottom: 20px;  /* 卡片內底部 */
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 12px;
+    gap: 8px;
     z-index: 10;
+    
+    /* iOS 風格浮動背景 */
+    background: rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    
+    padding: 8px 16px;
+    border-radius: 100px;
+    
+    /* 柔和陰影 */
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.1),
+        0 2px 8px rgba(0, 0, 0, 0.06),
+        0 0 0 0.5px rgba(255, 255, 255, 0.1) inset;
 }
 
-/* 桌面版：指示點在 Banner 內底部 */
+/* 桌面版 */
 @media (min-width: 1024px) {
     .slider-dots {
-        bottom: 20px;  /* 移回內部，底部 20px */
+        bottom: 25px;  /* 桌面版稍微高一點 */
+        gap: 10px;
+        padding: 10px 20px;
     }
 }
 
-/* 手機版：指示點保持在 Banner 內 */
-@media (max-width: 1023px) {
+/* 手機版 */
+@media (max-width: 767px) {
     .slider-dots {
-        bottom: 15px;  /* 稍微往上，避免太靠邊 */
+        bottom: 12px;  /* 稍微降低 */
+        gap: 5px;
+        padding: 5px 10px;  /* 更小的padding */
+    }
+}
+
+/* 極小螢幕 */
+@media (max-width: 400px) {
+    .slider-dots {
+        bottom: 10px;
+        gap: 4px;
+        padding: 4px 8px;
+    }
+    
+    .dot {
+        width: 6px;
+        height: 6px;
+    }
+    
+    .dot.active {
+        width: 16px;
     }
 }
 
 .dot {
-    width: 10px;
-    height: 10px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     
-    /* 玻璃質感背景 */
-    background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.6) 0%,
-        rgba(255, 255, 255, 0.3) 100%
-    );
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    /* iOS 風格半透明白色 */
+    background: rgba(255, 255, 255, 0.5);
     
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     
-    /* 精緻邊框和陰影 */
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 
-        0 0 0 1px rgba(255, 255, 255, 0.3) inset,
-        0 2px 8px rgba(0, 0, 0, 0.15),
-        0 1px 4px rgba(93, 64, 55, 0.1);
+    /* 無邊框 */
+    border: none;
+    box-shadow: none;
 }
 
 .dot:hover {
-    background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.8) 0%,
-        rgba(255, 255, 255, 0.5) 100%
-    );
-    transform: scale(1.3);
-    box-shadow: 
-        0 0 0 1px rgba(255, 255, 255, 0.5) inset,
-        0 4px 12px rgba(0, 0, 0, 0.2),
-        0 0 20px -5px rgba(255, 112, 67, 0.3);
+    background: rgba(255, 255, 255, 0.75);
+    transform: scale(1.15);
 }
 
 .dot.active {
-    background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.95) 0%,
-        rgba(255, 255, 255, 0.85) 100%
-    );
-    width: 36px;
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.95);
+    width: 20px;  /* iOS 風格橫向拉長 */
+    border-radius: 4px;
     box-shadow: 
-        0 0 0 1px rgba(255, 255, 255, 0.6) inset,
-        0 4px 16px rgba(0, 0, 0, 0.25),
-        0 2px 8px rgba(93, 64, 55, 0.15),
-        0 0 30px -8px rgba(255, 112, 67, 0.4);
+        0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* 響應式設計 - 平板 */
@@ -581,12 +746,12 @@
 /* 響應式設計 - 手機 */
 @media (max-width: 768px) {
     .hero-slider {
-        height: 100vw;  /* 手機版使用視窗寬度，完美顯示正方形圖片 */
-        max-height: 500px;  /* 限制最大高度，避免太高 */
+        height: 500px;  /* 手機版高度 */
+        max-height: 600px;
     }
     
     .slide {
-        padding: 0;  /* 移除 padding，讓圖片完整顯示 */
+        padding: 0;
     }
     
     .slide-content {
@@ -628,16 +793,16 @@
     }
     
     .slider-nav {
-        width: 40px;
-        height: 40px;
+        width: 44px;
+        height: 44px;
     }
     
     .slider-prev {
-        left: 15px;
+        left: 12px;
     }
     
     .slider-next {
-        right: 15px;
+        right: 12px;
     }
     
     .slider-dots {
@@ -646,8 +811,14 @@
     }
     
     .dot {
-        width: 10px;
-        height: 10px;
+        width: 7px;
+        height: 7px;
+    }
+    
+    /* 行動版圖片優化 - 保持完整顯示 */
+    .slide-image-full {
+        object-fit: contain;  /* 手機版也用contain */
+        border-radius: 12px;  /* 手機版較小圓角 */
     }
     
     .dot.active {
@@ -672,42 +843,59 @@
    純圖片輪播樣式更新
    ======================================== */
 
-/* 圖片輪播專用樣式 */
+/* 圖片輪播專用樣式 - 柔和卡片風格 */
 .slide-image-full {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: contain;  /* 保持完整顯示 */
     object-position: center;
     display: block;
-    /* 圖片清晰度優化 */
+    
+    /* 圖片平滑優化 - 保持穩定對齊 */
     image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
+    image-rendering: auto;
+    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    -webkit-font-smoothing: subpixel-antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+    /* 柔和圓角 */
+    border-radius: 20px;
+    
+    /* 輕微陰影增加立體感 */
+    box-shadow: 
+        0 0 0 1px rgba(0, 0, 0, 0.02),
+        0 8px 24px -4px rgba(93, 64, 55, 0.08),
+        0 4px 12px -2px rgba(0, 0, 0, 0.05);
 }
 
-/* 桌面版：圖片精緻化 */
+/* 桌面版：更精緻的效果 */
 @media (min-width: 1024px) {
     .slide-image-full {
-        border-radius: 16px;
+        border-radius: 24px;  /* 更大圓角 */
         
-        /* 簡潔的陰影 */
+        /* 更深的柔和陰影 */
         box-shadow: 
-            0 0 0 1px rgba(0, 0, 0, 0.04),
-            0 10px 40px -5px rgba(93, 64, 55, 0.12),
-            0 5px 20px -3px rgba(0, 0, 0, 0.08);
+            0 0 0 1px rgba(0, 0, 0, 0.03),
+            0 12px 32px -6px rgba(93, 64, 55, 0.1),
+            0 6px 16px -3px rgba(0, 0, 0, 0.06);
         
-        /* 平滑過渡 */
-        transition: all 0.3s ease;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
-    /* 懸停時微微提升 */
+    /* 懸停時輕微提升 - 移除 scale 避免變形 */
     .hero-slider:hover .slide.active .slide-image-full {
-        transform: translateY(-2px);
         box-shadow: 
-            0 0 0 1px rgba(0, 0, 0, 0.05),
-            0 15px 50px -8px rgba(93, 64, 55, 0.15),
-            0 8px 25px -5px rgba(0, 0, 0, 0.1);
+            0 0 0 1px rgba(0, 0, 0, 0.04),
+            0 16px 40px -8px rgba(93, 64, 55, 0.12),
+            0 8px 20px -4px rgba(0, 0, 0, 0.08);
+    }
+}
+
+/* 手機版 - 穩定渲染 */
+@media (max-width: 767px) {
+    .slide-image-full {
+        border-radius: 16px;
     }
 }
 
@@ -753,4 +941,230 @@ picture {
 picture img {
     width: 100%;
     height: 100%;
+}
+
+/* ========================================
+   Google Maps 地圖容器優化
+   ======================================== */
+
+.map-container {
+    grid-column: 1 / -1;
+    height: 500px;
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    /* Liquid Glass 效果升級 */
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.95) 0%, 
+        rgba(248, 244, 238, 0.95) 100%);
+    box-shadow: 
+        /* 內部高光 */
+        0 2px 0 rgba(255, 255, 255, 0.95) inset,
+        /* 主陰影 */
+        0 16px 48px rgba(93, 64, 55, 0.18),
+        0 8px 24px rgba(0, 0, 0, 0.12),
+        /* 細節陰影 */
+        0 4px 12px rgba(93, 64, 55, 0.08);
+    border: 4px solid rgba(255, 255, 255, 0.95);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.map-container:hover {
+    transform: translateY(-6px) scale(1.005);
+    box-shadow: 
+        0 2px 0 rgba(255, 255, 255, 1) inset,
+        0 24px 60px rgba(93, 64, 55, 0.22),
+        0 12px 32px rgba(0, 0, 0, 0.15),
+        0 6px 16px rgba(93, 64, 55, 0.1);
+    border-color: rgba(255, 112, 67, 0.3);
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+    /* 確保地圖順滑渲染 */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+/* 行動版地圖優化 */
+@media (max-width: 768px) {
+    .map-container {
+        height: 400px;
+        border-radius: 20px;
+        border-width: 3px;
+    }
+    
+    .map-container:hover {
+        transform: translateY(-3px) scale(1.002);
+    }
+
+/* ========================================
+   磁吸拖曳輪播增強效果
+   ======================================== */
+
+/* 拖曳時的 cursor 樣式 */
+.slider-container {
+    will-change: transform;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* 圖片 3D 效果優化 */
+.slide-image-full {
+    will-change: transform, opacity;
+    transition: none;  /* JS 會動態控制 */
+}
+
+/* 磁吸動畫時的平滑過渡 */
+.slider-container.snapping .slide-image-full {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+                opacity 0.6s ease !important;
+}
+
+/* 拖曳時禁止文字選取 */
+.hero-slider * {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+}
+
+/* 按鈕在拖曳模式下保持可見 */
+.slider-nav {
+    pointer-events: auto;
+    touch-action: manipulation;
+}
+
+/* 指示點增強視覺回饋 */
+.dot {
+    touch-action: manipulation;
+}
+
+.dot:active {
+    transform: scale(0.9);
+}
+
+/* 桌面版：滑鼠懸停提示可拖曳 */
+@media (min-width: 1024px) {
+    .slider-container:active {
+        cursor: grabbing !important;
+    }
+    
+    /* 拖曳時的視覺回饋 */
+    .hero-slider.dragging .slide-image-full {
+        filter: brightness(0.95);
+    }
+}
+
+/* 行動版：觸控優化 */
+@media (max-width: 1023px) {
+    .slider-container {
+        touch-action: pan-y pinch-zoom;  /* 允許垂直滾動，禁止水平滾動 */
+    }
+    
+    /* 確保觸控流暢 */
+    .slide-image-full {
+        pointer-events: none;  /* 防止圖片干擾觸控 */
+    }
+}
+
+/* 英文品名樣式 */
+.item-name-en {
+    font-weight: 400;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+    margin-left: 8px;
+    opacity: 0.8;
+}
+
+/* 菜單分類標題 - 重新設計 */
+.menu-category {
+    margin-bottom: 50px;
+}
+
+.category-title {
+    font-family: var(--font-serif);
+    display: inline-block;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 112, 67, 0.12) 0%,
+        rgba(255, 112, 67, 0.08) 100%
+    );
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    padding: 16px 28px;
+    margin-bottom: 25px !important;
+    border-radius: 16px;
+    border: 2px solid rgba(255, 112, 67, 0.2) !important;
+    
+    box-shadow: 
+        0 1px 0 rgba(255, 255, 255, 0.5) inset,
+        0 4px 16px rgba(255, 112, 67, 0.15),
+        0 2px 8px rgba(0, 0, 0, 0.06) !important;
+    
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.category-title:hover {
+    transform: translateX(8px);
+    border-color: rgba(255, 112, 67, 0.4) !important;
+    box-shadow: 
+        0 1px 0 rgba(255, 255, 255, 0.6) inset,
+        0 6px 20px rgba(255, 112, 67, 0.2),
+        0 3px 12px rgba(0, 0, 0, 0.08) !important;
+}
+
+.category-title-main {
+    font-size: 1.5rem;
+    color: var(--color-secondary);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.category-title-sub {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    font-weight: 400;
+    font-family: var(--font-sans);
+    font-style: italic;
+    opacity: 0.85;
+}
+
+/* Google Maps 按鈕樣式 */
+.map-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #4285F4 0%, #357ae8 100%);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.05rem;
+    box-shadow: 
+        0 1px 0 rgba(255, 255, 255, 0.2) inset,
+        0 4px 12px rgba(66, 133, 244, 0.3);
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.map-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 1px 0 rgba(255, 255, 255, 0.3) inset,
+        0 6px 16px rgba(66, 133, 244, 0.4);
+    background: linear-gradient(135deg, #357ae8 0%, #2a5fc7 100%);
+}
+
+.map-button svg {
+    flex-shrink: 0;
 }

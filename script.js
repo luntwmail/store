@@ -187,123 +187,184 @@ if (document.readyState === 'loading') {
     createParticles();
 }
 
-// ===== 精緻輪播 Banner 功能 =====
-let currentSlide = 0;
-let slideInterval;
-const slides = document.querySelectorAll('.slide');
-const dots = document.querySelectorAll('.dot');
-const totalSlides = slides.length;
-
-// 顯示指定的幻燈片
-function showSlide(index) {
-    // 處理索引邊界
-    if (index >= totalSlides) {
-        currentSlide = 0;
-    } else if (index < 0) {
-        currentSlide = totalSlides - 1;
-    } else {
-        currentSlide = index;
+// ===== 簡化版磁吸拖曳輪播 =====
+class MagneticSlider {
+    constructor() {
+        this.slider = document.querySelector('.hero-slider');
+        this.container = document.querySelector('.slider-container');
+        this.slides = Array.from(document.querySelectorAll('.slide'));
+        this.dots = Array.from(document.querySelectorAll('.dot'));
+        
+        if (!this.slider || this.slides.length === 0) return;
+        
+        this.currentIndex = 0;
+        this.totalSlides = this.slides.length;
+        
+        // 拖曳狀態
+        this.isDragging = false;
+        this.startX = 0;
+        this.currentX = 0;
+        this.dragDistance = 0;
+        
+        // 自動播放
+        this.autoPlayInterval = null;
+        this.autoPlayDelay = 5000;
+        
+        this.init();
     }
     
-    // 更新所有幻燈片的狀態
-    slides.forEach((slide, i) => {
-        slide.classList.remove('active', 'prev');
-        if (i === currentSlide) {
-            slide.classList.add('active');
-        } else if (i < currentSlide) {
-            slide.classList.add('prev');
-        }
-    });
-    
-    // 更新指示點
-    dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === currentSlide);
-    });
-}
-
-// 移動到下一張/上一張
-function moveSlide(direction) {
-    showSlide(currentSlide + direction);
-    resetSlideInterval(); // 重置自動播放計時器
-}
-
-// 直接跳到指定張
-function goToSlide(index) {
-    showSlide(index);
-    resetSlideInterval(); // 重置自動播放計時器
-}
-
-// 自動播放
-const SLIDE_INTERVAL_TIME = 5000; // 5秒切換一次
-
-function startSlideShow() {
-    // 確保先清除任何現有的計時器
-    if (slideInterval) {
-        clearInterval(slideInterval);
+    init() {
+        this.showSlide(0);
+        this.bindEvents();
+        this.startAutoPlay();
     }
     
-    slideInterval = setInterval(() => {
-        showSlide(currentSlide + 1);
-    }, SLIDE_INTERVAL_TIME);
-}
-
-// 重置自動播放計時器
-function resetSlideInterval() {
-    // 清除現有計時器
-    if (slideInterval) {
-        clearInterval(slideInterval);
-    }
-    // 重新開始完整的5秒計時
-    startSlideShow();
-}
-
-// 初始化輪播
-function initSlider() {
-    if (slides.length > 0) {
-        showSlide(0);
-        startSlideShow();
+    bindEvents() {
+        // 滑鼠事件
+        this.container.addEventListener('mousedown', this.onDragStart.bind(this));
+        document.addEventListener('mousemove', this.onDragMove.bind(this));
+        document.addEventListener('mouseup', this.onDragEnd.bind(this));
         
-        // 觸控滑動支援（手機版）
-        let touchStartX = 0;
-        let touchEndX = 0;
+        // 觸控事件
+        this.container.addEventListener('touchstart', this.onDragStart.bind(this), { passive: true });
+        document.addEventListener('touchmove', this.onDragMove.bind(this), { passive: true });
+        document.addEventListener('touchend', this.onDragEnd.bind(this));
         
-        const slider = document.querySelector('.hero-slider');
-        if (slider) {
-            slider.addEventListener('touchstart', (e) => {
-                touchStartX = e.changedTouches[0].screenX;
-            }, { passive: true });
-            
-            slider.addEventListener('touchend', (e) => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleSwipe();
-            }, { passive: true });
-        }
-        
-        function handleSwipe() {
-            const swipeThreshold = 50; // 最小滑動距離
-            if (touchEndX < touchStartX - swipeThreshold) {
-                // 向左滑動 - 下一張
-                moveSlide(1);
-            } else if (touchEndX > touchStartX + swipeThreshold) {
-                // 向右滑動 - 上一張
-                moveSlide(-1);
-            }
-        }
-        
-        // 滑鼠懸停時暫停自動播放
-        slider.addEventListener('mouseenter', () => {
-            clearInterval(slideInterval);
+        // 指示點點擊
+        this.dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => this.goToSlide(index));
         });
         
-        slider.addEventListener('mouseleave', () => {
-            startSlideShow();
+        // 暫停/繼續自動播放
+        this.slider.addEventListener('mouseenter', () => this.stopAutoPlay());
+        this.slider.addEventListener('mouseleave', () => this.startAutoPlay());
+    }
+    
+    onDragStart(e) {
+        this.isDragging = true;
+        this.container.style.cursor = 'grabbing';
+        
+        this.startX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+        this.currentX = this.startX;
+        this.dragDistance = 0;
+        
+        this.stopAutoPlay();
+    }
+    
+    onDragMove(e) {
+        if (!this.isDragging) return;
+        
+        const x = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+        this.dragDistance = x - this.startX;
+        this.currentX = x;
+    }
+    
+    onDragEnd(e) {
+        if (!this.isDragging) return;
+        
+        this.isDragging = false;
+        this.container.style.cursor = 'grab';
+        
+        const threshold = 50; // 50px 觸發切換
+        
+        if (this.dragDistance < -threshold) {
+            // 向左拖 - 下一張
+            this.nextSlide();
+        } else if (this.dragDistance > threshold) {
+            // 向右拖 - 上一張
+            this.prevSlide();
+        }
+        
+        this.dragDistance = 0;
+        
+        // 重啟自動播放
+        setTimeout(() => this.startAutoPlay(), 1000);
+    }
+    
+    showSlide(index) {
+        this.currentIndex = index;
+        
+        // 更新所有 slides
+        this.slides.forEach((slide, i) => {
+            slide.classList.remove('active', 'prev');
+            if (i === index) {
+                slide.classList.add('active');
+            } else if (i < index) {
+                slide.classList.add('prev');
+            }
+        });
+        
+        // 更新指示點
+        this.updateDots();
+    }
+    
+    updateDots() {
+        this.dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === this.currentIndex);
+        });
+    }
+    
+    goToSlide(index) {
+        this.stopAutoPlay();
+        this.showSlide(index);
+        setTimeout(() => this.startAutoPlay(), 1000);
+    }
+    
+    nextSlide() {
+        const nextIndex = (this.currentIndex + 1) % this.totalSlides;
+        this.showSlide(nextIndex);
+    }
+    
+    prevSlide() {
+        const prevIndex = (this.currentIndex - 1 + this.totalSlides) % this.totalSlides;
+        this.showSlide(prevIndex);
+    }
+    
+    startAutoPlay() {
+        this.stopAutoPlay();
+        this.autoPlayInterval = setInterval(() => {
+            this.nextSlide();
+        }, this.autoPlayDelay);
+    }
+    
+    stopAutoPlay() {
+        if (this.autoPlayInterval) {
+            clearInterval(this.autoPlayInterval);
+            this.autoPlayInterval = null;
+        }
+    }
+}
+
+// 初始化磁吸輪播
+let magneticSlider;
+
+function initMagneticSlider() {
+    magneticSlider = new MagneticSlider();
+    
+    // 綁定控制按鈕
+    const prevBtn = document.querySelector('.slider-prev');
+    const nextBtn = document.querySelector('.slider-next');
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            magneticSlider.stopAutoPlay();
+            magneticSlider.prevSlide();
+            setTimeout(() => magneticSlider.startAutoPlay(), 1000);
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            magneticSlider.stopAutoPlay();
+            magneticSlider.nextSlide();
+            setTimeout(() => magneticSlider.startAutoPlay(), 1000);
         });
     }
 }
 
 // 當DOM載入完成後初始化
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initSlider);
+    document.addEventListener('DOMContentLoaded', initMagneticSlider);
 } else {
-    initSlider();
+    initMagneticSlider();
 }
