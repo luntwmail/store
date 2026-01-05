@@ -1138,39 +1138,86 @@ picture img {
     opacity: 0.85;
 }
 
-/* Google Maps 按鈕樣式 */
+/* Google Maps 按鈕樣式 - Google 四色配色 */
 a.map-button {
     display: inline-flex !important;
     align-items: center;
-    gap: 10px;
-    background: linear-gradient(135deg, #4285F4 0%, #357ae8 100%) !important;
+    gap: 12px;
+    
+    /* Google Maps 經典配色漸層 */
+    background: linear-gradient(
+        135deg,
+        #4285F4 0%,    /* Google 藍 */
+        #34A853 50%,   /* Google 綠 */
+        #FBBC04 75%,   /* Google 黃 */
+        #EA4335 100%   /* Google 紅 */
+    ) !important;
+    
     color: white !important;
-    padding: 14px 28px;
-    border-radius: 25px;
+    padding: 16px 32px;
+    border-radius: 28px;
     text-decoration: none !important;
     font-weight: 700;
-    font-size: 1.05rem;
+    font-size: 1.1rem;
+    
+    /* 精緻多層陰影 */
     box-shadow: 
-        0 1px 0 rgba(255, 255, 255, 0.2) inset,
-        0 4px 12px rgba(66, 133, 244, 0.3);
-    transition: all 0.3s ease;
+        0 1px 0 rgba(255, 255, 255, 0.3) inset,
+        0 8px 24px rgba(66, 133, 244, 0.25),
+        0 4px 12px rgba(52, 168, 83, 0.15),
+        0 2px 6px rgba(0, 0, 0, 0.1);
+    
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     margin-top: 20px;
     border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 按鈕光暈效果 */
+a.map-button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.2) 0%,
+        transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+a.map-button:hover::before {
+    opacity: 1;
 }
 
 a.map-button:hover {
-    transform: translateY(-2px) !important;
+    transform: translateY(-4px) scale(1.02) !important;
+    
+    /* 更強的陰影 */
     box-shadow: 
-        0 1px 0 rgba(255, 255, 255, 0.3) inset,
-        0 6px 16px rgba(66, 133, 244, 0.4);
-    background: linear-gradient(135deg, #357ae8 0%, #2a5fc7 100%) !important;
+        0 1px 0 rgba(255, 255, 255, 0.4) inset,
+        0 12px 32px rgba(66, 133, 244, 0.35),
+        0 6px 16px rgba(52, 168, 83, 0.25),
+        0 3px 8px rgba(0, 0, 0, 0.15);
+    
     color: white !important;
 }
 
+a.map-button:active {
+    transform: translateY(-2px) scale(1.01) !important;
+}
+
+/* 移除可能的衝突樣式 */
 a.map-button::after {
     display: none !important;
 }
 
 a.map-button svg {
     flex-shrink: 0;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
