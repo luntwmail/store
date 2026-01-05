@@ -336,7 +336,7 @@
 
 .slide.active {
     opacity: 1;
-    pointer-events: none;
+    pointer-events: auto;  /* 改為 auto，讓拖曳事件可以作用 */
     z-index: 2;
 }
 
@@ -511,7 +511,7 @@
     align-items: center;
     justify-content: center;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 100;
+    z-index: 200;  /* 提高 z-index，確保在 slide 之上 */
     color: var(--color-secondary);
     pointer-events: auto;  /* 確保可點擊 */
     
