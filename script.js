@@ -284,14 +284,8 @@ class MagneticSlider {
     showSlide(index) {
         this.currentIndex = index;
         
-        // 更新所有 slides
+        // 更新所有 slides - 只透過 Class 控制，讓 CSS 處理顯示邏輯
         this.slides.forEach((slide, i) => {
-            // 手機版使用 display 切換以撐開高度
-            if (window.innerWidth <= 768) {
-                slide.style.display = (i === index) ? 'block' : 'none';
-                slide.style.position = 'relative';
-            }
-            
             slide.classList.remove('active', 'prev');
             if (i === index) {
                 slide.classList.add('active');
