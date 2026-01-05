@@ -664,7 +664,7 @@
 /* 手機版 */
 @media (max-width: 767px) {
     .slider-dots {
-        bottom: 12px;  /* 稍微降低 */
+        bottom: 20px;  /* 增加底部距離 */
         gap: 5px;
         padding: 5px 10px;  /* 更小的padding */
     }
@@ -673,7 +673,7 @@
 /* 極小螢幕 */
 @media (max-width: 400px) {
     .slider-dots {
-        bottom: 10px;
+        bottom: 16px;  /* 增加底部距離 */
         gap: 4px;
         padding: 4px 8px;
     }

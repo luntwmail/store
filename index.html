@@ -39,8 +39,11 @@
     <link rel="preload" href="script.js" as="script">
     <link rel="preload" href="img/desktop/gh-promotion.png" as="image">
     
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@600;900&display=swap" rel="stylesheet">
+    <!-- Fonts with display=swap for faster render -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@600;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@600;900&display=swap" rel="stylesheet">
+    </noscript>
     
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
@@ -92,7 +95,7 @@
                 <picture>
                     <source media="(max-width: 768px)" srcset="img/mobile/gh-address.png">
                     <source media="(min-width: 769px)" srcset="img/desktop/gh-address.png">
-                    <img src="img/desktop/gh-address.png" alt="公正飯糰地址資訊" class="slide-image-full">
+                    <img src="img/desktop/gh-address.png" alt="公正飯糰地址資訊" class="slide-image-full" loading="lazy">
                 </picture>
             </div>
 
@@ -101,7 +104,7 @@
                 <picture>
                     <source media="(max-width: 768px)" srcset="img/mobile/gh-website.png">
                     <source media="(min-width: 769px)" srcset="img/desktop/gh-website.png">
-                    <img src="img/desktop/gh-website.png" alt="公正飯糰官方網站" class="slide-image-full">
+                    <img src="img/desktop/gh-website.png" alt="公正飯糰官方網站" class="slide-image-full" loading="lazy">
                 </picture>
             </div>
 
@@ -110,7 +113,7 @@
                 <picture>
                     <source media="(max-width: 768px)" srcset="img/mobile/gh-line_business_id.png">
                     <source media="(min-width: 769px)" srcset="img/desktop/gh-line_business_id.png">
-                    <img src="img/desktop/gh-line_business_id.png" alt="LINE 官方帳號" class="slide-image-full">
+                    <img src="img/desktop/gh-line_business_id.png" alt="LINE 官方帳號" class="slide-image-full" loading="lazy">
                 </picture>
             </div>
 
@@ -119,7 +122,7 @@
                 <picture>
                     <source media="(max-width: 768px)" srcset="img/mobile/gh-instagram.png">
                     <source media="(min-width: 769px)" srcset="img/desktop/gh-instagram.png">
-                    <img src="img/desktop/gh-instagram.png" alt="Instagram 追蹤我們" class="slide-image-full">
+                    <img src="img/desktop/gh-instagram.png" alt="Instagram 追蹤我們" class="slide-image-full" loading="lazy">
                 </picture>
             </div>
 
@@ -128,7 +131,7 @@
                 <picture>
                     <source media="(max-width: 768px)" srcset="img/mobile/gh-google_maps.png">
                     <source media="(min-width: 769px)" srcset="img/desktop/gh-google_maps.png">
-                    <img src="img/desktop/gh-google_maps.png" alt="Google Maps 找到我們" class="slide-image-full">
+                    <img src="img/desktop/gh-google_maps.png" alt="Google Maps 找到我們" class="slide-image-full" loading="lazy">
                 </picture>
             </div>
 
@@ -137,7 +140,7 @@
                 <picture>
                     <source media="(max-width: 768px)" srcset="img/mobile/gh-new_product.png">
                     <source media="(min-width: 769px)" srcset="img/desktop/gh-new_product.png">
-                    <img src="img/desktop/gh-new_product.png" alt="新品上市" class="slide-image-full">
+                    <img src="img/desktop/gh-new_product.png" alt="新品上市" class="slide-image-full" loading="lazy">
                 </picture>
             </div>
 
@@ -146,7 +149,7 @@
                 <picture>
                     <source media="(max-width: 768px)" srcset="img/mobile/gh-uber_eats.png">
                     <source media="(min-width: 769px)" srcset="img/desktop/gh-uber_eats.png">
-                    <img src="img/desktop/gh-uber_eats.png" alt="UberEats 外送服務" class="slide-image-full">
+                    <img src="img/desktop/gh-uber_eats.png" alt="UberEats 外送服務" class="slide-image-full" loading="lazy">
                 </picture>
             </div>
 
@@ -155,7 +158,7 @@
                 <picture>
                     <source media="(max-width: 768px)" srcset="img/mobile/gh-foodpanda.png">
                     <source media="(min-width: 769px)" srcset="img/desktop/gh-foodpanda.png">
-                    <img src="img/desktop/gh-foodpanda.png" alt="foodpanda 外送服務" class="slide-image-full">
+                    <img src="img/desktop/gh-foodpanda.png" alt="foodpanda 外送服務" class="slide-image-full" loading="lazy">
                 </picture>
             </div>
 
@@ -164,7 +167,7 @@
                 <picture>
                     <source media="(max-width: 768px)" srcset="img/mobile/gh-line-pay.png">
                     <source media="(min-width: 769px)" srcset="img/desktop/gh-line-pay.png">
-                    <img src="img/desktop/gh-line-pay.png" alt="LINE Pay 支付服務" class="slide-image-full">
+                    <img src="img/desktop/gh-line-pay.png" alt="LINE Pay 支付服務" class="slide-image-full" loading="lazy">
                 </picture>
             </div>
 
@@ -173,7 +176,7 @@
                 <picture>
                     <source media="(max-width: 768px)" srcset="img/mobile/gh-day-off.png">
                     <source media="(min-width: 769px)" srcset="img/desktop/gh-day-off.png">
-                    <img src="img/desktop/gh-day-off.png" alt="公休日公告" class="slide-image-full">
+                    <img src="img/desktop/gh-day-off.png" alt="公休日公告" class="slide-image-full" loading="lazy">
                 </picture>
             </div>
             
@@ -573,6 +576,6 @@
         </section>
     </main>
     
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
