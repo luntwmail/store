@@ -187,7 +187,8 @@
 .slider-container {
     position: relative;
     width: 100%;
-    height: 500px;
+    height: auto;  /* 改為 auto，適應圖片高度 */
+    min-height: 400px;  /* 設定最小高度 */
     z-index: 2;
     
     /* 淺米白色背景 */
@@ -228,7 +229,8 @@
     .slider-container {
         max-width: 1400px;
         margin: 0 auto;
-        height: 580px;
+        height: auto;  /* 改為 auto */
+        min-height: 500px;  /* 設定最小高度 */
         padding: 0 60px;  /* 只保留左右 padding，移除上下 */
         border-radius: 40px;
         
@@ -263,7 +265,8 @@
     .slider-container {
         max-width: 90%;  /* 使用百分比 */
         margin: 0 auto;  /* 左右居中 */
-        height: 520px;
+        height: auto;  /* 改為 auto */
+        min-height: 450px;
         padding: 0 35px;  /* 只保留左右 padding */
     }
     
@@ -280,7 +283,8 @@
     .slider-container {
         max-width: calc(100% - 30px);  /* 左右各留 15px */
         margin: 0 auto;  /* 居中 */
-        height: 360px;
+        height: auto;  /* 改為 auto */
+        min-height: 300px;
         padding: 0 18px;  /* 只保留左右 padding */
         border-radius: 20px;
     }
@@ -298,7 +302,8 @@
     .slider-container {
         max-width: calc(100% - 24px);  /* 左右各留 12px */
         margin: 0 auto;  /* 居中 */
-        height: 320px;
+        height: auto;  /* 改為 auto */
+        min-height: 250px;
         padding: 0 15px;  /* 只保留左右 padding */
     }
     
@@ -315,23 +320,22 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: stretch;  /* 改為 stretch，填滿高度 */
-    justify-content: stretch;  /* 改為 stretch，填滿寬度 */
+    height: auto;  /* 改為 auto */
+    min-height: 100%;  /* 但至少要填滿容器 */
+    display: block;  /* 改為 block */
     padding: 0;
     user-select: none;
     -webkit-user-select: none;
     opacity: 0;
-    pointer-events: none;  /* 預設不可點擊 */
+    pointer-events: none;
     transition: opacity 0.6s ease;
-    overflow: hidden;  /* 在這裡裁切圖片，保持圓角 */
-    border-radius: 24px;  /* 與圖片圓角一致 */
+    overflow: hidden;
+    border-radius: 24px;
 }
 
 .slide.active {
     opacity: 1;
-    pointer-events: none;  /* 改為 none，讓點擊事件穿透 */
+    pointer-events: none;
     z-index: 2;
 }
 
@@ -342,11 +346,9 @@
 /* 確保 picture 元素填滿 slide */
 .slide picture {
     width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: stretch;  /* 填滿高度 */
-    justify-content: stretch;  /* 填滿寬度 */
-    pointer-events: none;  /* picture 也設為 none */
+    height: auto;  /* 改為 auto */
+    display: block;
+    pointer-events: none;
 }
 
 .slide-content {
@@ -815,9 +817,9 @@
         height: 7px;
     }
     
-    /* 行動版圖片優化 - 填滿顯示 */
+    /* 行動版圖片優化 - 完整顯示 */
     .slide-image-full {
-        object-fit: cover;  /* 手機版也用 cover，填滿 */
+        object-fit: contain;  /* 改回 contain */
         border-radius: 12px;  /* 手機版較小圓角 */
     }
     
@@ -846,8 +848,9 @@
 /* 圖片輪播專用樣式 - 柔和卡片風格 */
 .slide-image-full {
     width: 100%;
-    height: 100%;
-    object-fit: cover;  /* 改為 cover，填滿整個容器 */
+    height: auto;  /* 改為 auto，保持比例 */
+    max-width: 100%;
+    object-fit: contain;  /* 改回 contain，完整顯示 */
     object-position: center;
     display: block;
     
