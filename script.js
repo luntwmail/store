@@ -368,3 +368,61 @@ if (document.readyState === 'loading') {
 } else {
     initMagneticSlider();
 }
+
+// ========================================
+// 菜單 Lightbox 功能 - v9.3.7.1
+// ========================================
+
+// 開啟菜單燈箱
+function openMenuLightbox() {
+    const lightbox = document.getElementById('menuLightbox');
+    if (lightbox) {
+        lightbox.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // 防止背景滾動
+    }
+}
+
+// 關閉菜單燈箱
+function closeMenuLightbox() {
+    const lightbox = document.getElementById('menuLightbox');
+    if (lightbox) {
+        lightbox.style.display = 'none';
+        document.body.style.overflow = 'auto'; // 恢復滾動
+    }
+}
+
+// 按 ESC 鍵關閉燈箱
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape' || event.key === 'Esc') {
+        closeMenuLightbox();
+    }
+});
+
+// 點擊燈箱圖片或關閉按鈕時阻止關閉（只有點擊背景才關閉）
+document.addEventListener('DOMContentLoaded', function() {
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxCaption = document.querySelector('.lightbox-caption');
+    const closeButton = document.querySelector('.lightbox-close-button');
+    
+    // 阻止圖片點擊關閉
+    if (lightboxImage) {
+        lightboxImage.addEventListener('click', function(event) {
+            event.stopPropagation();
+        });
+    }
+    
+    // 阻止標題點擊關閉
+    if (lightboxCaption) {
+        lightboxCaption.addEventListener('click', function(event) {
+            event.stopPropagation();
+        });
+    }
+    
+    // 阻止關閉按鈕的點擊事件向上傳播（按鈕本身會觸發 closeMenuLightbox）
+    if (closeButton) {
+        closeButton.addEventListener('click', function(event) {
+            event.stopPropagation();
+            closeMenuLightbox();
+        });
+    }
+});

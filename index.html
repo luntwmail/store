@@ -294,6 +294,35 @@
         <section id="menu" class="section">
             <h2>完整菜單</h2>
 
+            <!-- 菜單圖片預覽卡片 -->
+            <div class="menu-preview-card">
+                <div class="menu-preview-header">
+                    <span class="preview-icon">📋</span>
+                    <div class="preview-text">
+                        <h3>完整菜單總覽</h3>
+                        <p>點擊查看大圖</p>
+                    </div>
+                </div>
+                <div class="menu-preview-image" onclick="openMenuLightbox()">
+                    <img src="img/gongzheng-huizhong-menu-v22.png" alt="公正飯糰惠中店完整菜單" loading="lazy">
+                    <div class="preview-overlay">
+                        <span class="preview-zoom-icon">🔍</span>
+                        <span class="preview-zoom-text">點擊放大查看</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lightbox 燈箱 -->
+            <div id="menuLightbox" class="lightbox" onclick="closeMenuLightbox()">
+                <span class="lightbox-close">&times;</span>
+                <img class="lightbox-content" id="lightboxImage" src="img/gongzheng-huizhong-menu-v22.png" alt="公正飯糰惠中店完整菜單">
+                <div class="lightbox-caption">公正飯糰(惠中店) 完整菜單</div>
+                <button class="lightbox-close-button" onclick="closeMenuLightbox()">
+                    <span>✕</span>
+                    <span>關閉</span>
+                </button>
+            </div>
+
             <div class="menu-category">
                 <header class="category-badge">
                     <span class="category-title-main">獨家招牌</span>

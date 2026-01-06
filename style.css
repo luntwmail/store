@@ -73,6 +73,272 @@
 }
 /* ======================================== */
 
+/* ========================================
+   菜單圖片預覽卡片 - v9.3.7.1 優化版
+   ======================================== */
+.menu-preview-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 244, 238, 0.95) 100%);
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 40px;
+    box-shadow: 
+        0 1px 0 rgba(255, 255, 255, 0.8) inset,
+        0 8px 32px rgba(93, 64, 55, 0.12),
+        0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    max-width: 600px; /* 限制最大寬度 */
+}
+
+.menu-preview-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+        0 1px 0 rgba(255, 255, 255, 0.9) inset,
+        0 12px 40px rgba(93, 64, 55, 0.15),
+        0 6px 16px rgba(0, 0, 0, 0.1);
+    border-color: rgba(255, 112, 67, 0.3);
+}
+
+.menu-preview-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.preview-icon {
+    font-size: 2.5rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.preview-text h3 {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    color: var(--color-secondary);
+    margin-bottom: 4px;
+    font-weight: 700;
+}
+
+.preview-text p {
+    font-size: 0.9rem;
+    color: var(--color-accent);
+    font-weight: 500;
+}
+
+.menu-preview-image {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.menu-preview-image:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 24px rgba(255, 112, 67, 0.2);
+}
+
+.menu-preview-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.menu-preview-image:hover img {
+    filter: brightness(1.05);
+}
+
+.preview-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0, 0, 0, 0.7) 100%
+    );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.menu-preview-image:hover .preview-overlay {
+    opacity: 1;
+}
+
+.preview-zoom-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.preview-zoom-text {
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Lightbox 燈箱樣式 - 優化版 */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding: 40px 20px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.lightbox-content {
+    margin: auto;
+    display: block;
+    max-width: 800px; /* 限制最大寬度 */
+    width: auto;
+    max-height: 85vh;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* 右上角 X 關閉按鈕 */
+.lightbox-close {
+    position: fixed;
+    top: 20px;
+    right: 35px;
+    color: white;
+    font-size: 50px;
+    font-weight: 300;
+    transition: 0.3s;
+    cursor: pointer;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+    line-height: 1;
+}
+
+.lightbox-close:hover,
+.lightbox-close:focus {
+    color: var(--color-accent);
+    transform: scale(1.1);
+}
+
+/* 明顯的關閉按鈕 */
+.lightbox-close-button {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--color-accent) 0%, #FF5722 100%);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 
+        0 2px 0 rgba(255, 255, 255, 0.3) inset,
+        0 8px 24px rgba(255, 112, 67, 0.5),
+        0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.lightbox-close-button:hover {
+    transform: translateX(-50%) translateY(-3px);
+    box-shadow: 
+        0 2px 0 rgba(255, 255, 255, 0.4) inset,
+        0 12px 32px rgba(255, 112, 67, 0.6),
+        0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.lightbox-close-button:active {
+    transform: translateX(-50%) translateY(-1px);
+}
+
+.lightbox-caption {
+    margin: 20px auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* 響應式調整 */
+@media (max-width: 768px) {
+    .menu-preview-card {
+        padding: 20px;
+        margin-bottom: 30px;
+        max-width: 100%; /* 手機版全寬 */
+    }
+    
+    .preview-text h3 {
+        font-size: 1.2rem;
+    }
+    
+    .preview-icon {
+        font-size: 2rem;
+    }
+    
+    .lightbox {
+        padding: 20px 10px;
+    }
+    
+    .lightbox-close {
+        top: 15px;
+        right: 20px;
+        font-size: 40px;
+    }
+    
+    .lightbox-content {
+        max-width: 95%;
+        max-height: 80vh;
+    }
+    
+    .lightbox-close-button {
+        bottom: 20px;
+        padding: 12px 28px;
+        font-size: 1rem;
+    }
+}
+/* ======================================== */
+
 *{margin:0;padding:0;box-sizing:border-box}body{font-family:var(--font-sans);background-color:var(--color-bg-light);color:var(--color-text-dark);line-height:1.7;overflow-x:hidden}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 20% 50%,rgba(255,112,67,.04) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(93,64,55,.04) 0%,transparent 50%),linear-gradient(180deg,rgba(255,255,255,.5) 0%,transparent 100%);pointer-events:none;z-index:-1}body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background-image:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(93,64,55,.015) 2px,rgba(93,64,55,.015) 4px);pointer-events:none;z-index:-1}.navbar{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:20px 5%;background:linear-gradient(180deg,rgba(253,251,247,.98) 0%,rgba(253,251,247,.95) 100%);backdrop-filter:blur(12px) saturate(180%);box-shadow:0 1px 0 rgba(255,255,255,.8) inset,0 4px 20px rgba(93,64,55,.08),0 1px 3px rgba(0,0,0,.05);z-index:1000;transition:var(--transition);border-bottom:1px solid rgba(93,64,55,.08)}.navbar.scrolled{padding:12px 5%;box-shadow:0 1px 0 rgba(255,255,255,.8) inset,0 8px 32px rgba(93,64,55,.12),0 2px 8px rgba(0,0,0,.08)}.logo{display:flex;align-items:center;gap:12px;font-family:var(--font-serif);font-size:1.5rem;font-weight:900;color:var(--color-secondary);text-shadow:0 1px 2px rgba(255,255,255,.8)}.logo img{width:50px;height:50px;object-fit:cover;filter:drop-shadow(0 2px 6px rgba(0,0,0,.12));border-radius:8px;border:2px solid rgba(255,255,255,.8);transition:var(--transition)}.navbar.scrolled .logo img{width:42px;height:42px}.nav-links{display:flex;gap:8px;align-items:center}.nav-link{padding:10px 18px;color:var(--color-text-dark);text-decoration:none;font-weight:500;border-radius:12px;transition:var(--transition);position:relative}.nav-link::before{content:'';position:absolute;inset:0;border-radius:12px;background:linear-gradient(135deg,rgba(255,112,67,.1) 0%,rgba(255,112,67,.05) 100%);opacity:0;transition:var(--transition)}.nav-link::after{content:'';position:absolute;bottom:8px;left:18px;right:18px;height:2px;background:linear-gradient(90deg,var(--color-accent) 0%,#FF5722 100%);transform:scaleX(0);transition:transform .3s ease;border-radius:1px}.nav-link:hover::before{opacity:1}.nav-link:hover{transform:translateY(-2px);color:var(--color-accent)}.nav-link:hover::after{transform:scaleX(1)}.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:10px;border-radius:10px;transition:var(--transition);background:linear-gradient(135deg,rgba(255,255,255,.8) 0%,rgba(245,232,199,.5) 100%);border:1px solid rgba(93,64,55,.15);box-shadow:0 2px 8px rgba(93,64,55,.1),0 1px 0 rgba(255,255,255,.8) inset}.hamburger:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(93,64,55,.15),0 1px 0 rgba(255,255,255,.8) inset}.hamburger:active{transform:scale(.98)}.hamburger-line{width:24px;height:3px;background:linear-gradient(135deg,var(--color-secondary) 0%,var(--color-text-muted) 100%);border-radius:3px;transition:var(--transition);box-shadow:0 1px 2px rgba(0,0,0,.1)}.hamburger.open .line1{transform:rotate(45deg) translate(7px,7px)}.hamburger.open .line2{opacity:0;transform:scaleX(0)}.hamburger.open .line3{transform:rotate(-45deg) translate(7px,-7px)}.nav-menu{position:fixed;top:82px;left:0;right:0;background:linear-gradient(180deg,rgba(253,251,247,.98) 0%,rgba(248,244,238,.98) 100%);backdrop-filter:blur(20px) saturate(180%);padding:0;box-shadow:0 8px 32px rgba(93,64,55,.15),0 1px 0 rgba(255,255,255,.8) inset;max-height:0;overflow:hidden;opacity:0;transition:max-height .4s cubic-bezier(.4,0,.2,1),opacity .3s ease,padding .4s ease;border-bottom:1px solid rgba(93,64,55,.1);z-index:999}.nav-menu.active{max-height:500px;opacity:1;padding:15px 5%}.nav-menu .nav-link{display:block;text-align:center;padding:16px 20px;margin-bottom:8px;border-radius:12px;background:linear-gradient(135deg,rgba(255,255,255,.6) 0%,rgba(245,232,199,.3) 100%);border:1px solid rgba(93,64,55,.08);box-shadow:0 2px 8px rgba(0,0,0,.04)}.nav-menu .nav-link:hover{background:linear-gradient(135deg,rgba(255,112,67,.1) 0%,rgba(255,112,67,.05) 100%);border-color:var(--color-accent);transform:translateX(0) scale(1.02)}main{padding:40px 5%;max-width:1200px;margin:0 auto}.section{background:linear-gradient(135deg,rgba(255,255,255,.95) 0%,rgba(255,255,255,.9) 100%);padding:60px 50px;margin-bottom:40px;border-radius:24px;box-shadow:0 1px 0 rgba(255,255,255,.8) inset,0 10px 40px rgba(93,64,55,.08),0 2px 8px rgba(0,0,0,.04);border:1px solid rgba(255,255,255,.8);opacity:0;transform:translateY(30px);animation:fadeUp .8s ease forwards;position:relative;overflow:hidden}.section::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,112,67,.03) 0%,transparent 70%);pointer-events:none}@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}.section:nth-child(1){animation-delay:.1s}.section:nth-child(2){animation-delay:.2s}.section:nth-child(3){animation-delay:.3s}.section:nth-child(4){animation-delay:.4s}.section:nth-child(5){animation-delay:.5s}.section:nth-child(6){animation-delay:.6s}h2{font-family:var(--font-serif);font-size:2.2rem;color:var(--color-accent);margin-bottom:30px;position:relative;display:inline-block;padding-bottom:12px;text-shadow:0 2px 4px rgba(255,112,67,.1)}h2::after{content:'';position:absolute;bottom:0;left:0;width:60%;height:4px;background:linear-gradient(90deg,var(--color-accent) 0%,rgba(255,112,67,.3) 100%);border-radius:2px;box-shadow:0 2px 4px rgba(255,112,67,.3)}.status-banner{background:linear-gradient(135deg,#4CAF50 0%,#45a049 100%);color:#fff;padding:25px 30px;border-radius:20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:35px;box-shadow:0 1px 0 rgba(255,255,255,.2) inset,0 8px 24px rgba(76,175,80,.3),0 2px 8px rgba(0,0,0,.1);border:1px solid rgba(255,255,255,.2);position:relative;overflow:hidden}.status-banner::before {
     content: '';
     position: absolute;
@@ -591,7 +857,7 @@
     align-items: center;
     justify-content: center;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 500 !important;  /* 提高 z-index，確保在 slide 之上 */
+    z-index: 200;  /* 提高 z-index，確保在 slide 之上 */
     color: var(--color-secondary);
     pointer-events: auto;  /* 確保可點擊 */
     
