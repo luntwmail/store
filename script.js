@@ -374,6 +374,12 @@ if (document.readyState === 'loading') {
 // ========================================
 
 function openMenuLightbox(event, imgSrc) {
+    // 桌面版不開啟燈箱,只有手機版才開啟
+    if (window.innerWidth > 768) {
+        // 桌面版:什麼都不做,讓用戶直接看圖片
+        return;
+    }
+    
     if (event) {
         event.preventDefault();
         event.stopPropagation();
@@ -384,9 +390,11 @@ function openMenuLightbox(event, imgSrc) {
     
     if (lightbox && lightboxImg) {
         lightboxImg.src = imgSrc;
-        lightbox.style.display = 'flex'; // 啟動 Flex 佈局
+        lightbox.style.display = 'flex';
         
-        // 核心修復:僅鎖定滾動,不改變定位,防止閃動與重定位
+        // 核心修正:僅鎖定滾動條,不改 position 定位
+        // 這能保證關閉時頁面絕對停留在菜單位置,不跳回頂部
+        document.documentElement.style.overflow = 'hidden';
         document.body.style.overflow = 'hidden';
     }
 }
@@ -396,7 +404,8 @@ function closeMenuLightbox() {
     if (lightbox) {
         lightbox.style.display = 'none';
         
-        // 直接恢復滾動,網頁座標完全沒變,不會跳到頂端
+        // 恢復捲動,座標完全不動
+        document.documentElement.style.overflow = '';
         document.body.style.overflow = '';
     }
 }

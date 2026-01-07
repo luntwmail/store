@@ -300,14 +300,22 @@
                     <span class="preview-icon">📋</span>
                     <div class="preview-text">
                         <h3>完整菜單總覽</h3>
-                        <p>點擊查看大圖</p>
+                        <p class="mobile-hint">點擊查看大圖</p>
                     </div>
                 </div>
-                <div class="menu-preview-image" onclick="openMenuLightbox(event, 'img/gongzheng-huizhong-menu-v22.png')">
+                <!-- 桌面版:直接顯示,不可點擊 -->
+                <div class="menu-preview-image desktop-menu">
                     <img src="img/gongzheng-huizhong-menu-v22.png" 
                          alt="完整菜單" 
                          loading="lazy"
-                         onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjgwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjgwMCIgZmlsbD0iI2Y1ZThjNyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiM1ZDQwMzciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7oj5zljZbkuIrkvKDkuK08L3RleHQ+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iI2ZmNzA0MyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPuiri+Wwh+iPnOWNlumHjeeJh+aUvuWIsCBpbWcv6LOH5paZ5aS+PC90ZXh0Pjwvc3ZnPg=='; this.parentElement.style.cursor='default';">
+                         onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjgwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjgwMCIgZmlsbD0iI2Y1ZThjNyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiM1ZDQwMzciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7oj5zljZbkuIrkvKDkuK08L3RleHQ+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iI2ZmNzA0MyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPuiri+Wwh+iPnOWNlumHjeeJh+aUvuWIsCBpbWcv6LOH5paZ5aS+PC90ZXh0Pjwvc3ZnPg==';">
+                </div>
+                <!-- 手機版:可點擊開啟燈箱 -->
+                <div class="menu-preview-image mobile-menu" onclick="openMenuLightbox(event, 'img/gongzheng-huizhong-menu-v22.png')">
+                    <img src="img/gongzheng-huizhong-menu-v22.png" 
+                         alt="完整菜單" 
+                         loading="lazy"
+                         onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjgwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNjAwIiBoZWlnaHQ9IjgwMCIgZmlsbD0iI2Y1ZThjNyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiM1ZDQwMzciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7oj5zljZbkuIrkvKDkuK08L3RleHQ+PHRleHQgeD0iNTAlIiB5PSI1NSUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iI2ZmNzA0MyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPuiri+Wwh+iPnOWNlumHjeeJh+aUvuWIsCBpbWcv6LOH5paZ5aS+PC90ZXh0Pjwvc3ZnPg==';">
                     <div class="preview-overlay">
                         <span class="preview-zoom-icon">🔍</span>
                         <span class="preview-zoom-text">點擊放大查看</span>
@@ -315,7 +323,7 @@
                 </div>
             </div>
 
-            <!-- Lightbox 燈箱 - v9.4.2 終極自適應版 -->
+            <!-- Lightbox 燈箱 - 只在手機版顯示 -->
             <div id="menuLightbox" class="lightbox">
                 <span class="lightbox-close" onclick="closeMenuLightbox()">&times;</span>
                 <img class="lightbox-content" 
