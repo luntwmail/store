@@ -374,7 +374,6 @@ if (document.readyState === 'loading') {
 // ========================================
 
 function openMenuLightbox(event, imgSrc) {
-    // 1. 核心修復：立即阻止所有預設行為與冒泡，防止頁面跳轉
     if (event) {
         event.preventDefault();
         event.stopPropagation();
@@ -385,27 +384,20 @@ function openMenuLightbox(event, imgSrc) {
     
     if (lightbox && lightboxImg) {
         lightboxImg.src = imgSrc;
-        lightbox.style.display = 'flex'; // 強制使用 flex 居中
+        lightbox.style.display = 'flex'; // 啟動 Flex 佈局
         
-        // 2. 鎖定背景並記錄當前捲動位置，防止跳動
-        const scrollY = window.scrollY;
-        document.body.style.position = 'fixed';
-        document.body.style.top = `-${scrollY}px`;
-        document.body.style.width = '100%';
+        // 核心修復:僅鎖定滾動,不改變定位,防止閃動與重定位
+        document.body.style.overflow = 'hidden';
     }
 }
 
 function closeMenuLightbox() {
     const lightbox = document.getElementById('menuLightbox');
     if (lightbox) {
-        // 恢復捲動位置
-        const scrollY = document.body.style.top;
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.width = '';
-        window.scrollTo(0, parseInt(scrollY || '0') * -1);
-        
         lightbox.style.display = 'none';
+        
+        // 直接恢復滾動,網頁座標完全沒變,不會跳到頂端
+        document.body.style.overflow = '';
     }
 }
 
@@ -413,14 +405,12 @@ function closeMenuLightbox() {
 document.addEventListener('DOMContentLoaded', function() {
     const lightbox = document.getElementById('menuLightbox');
     const lightboxImage = document.getElementById('lightboxImage');
-    const closeButton = document.querySelector('.lightbox-close-button');
-    const closeX = document.querySelector('.lightbox-close');
     
     if (!lightbox) return;
 
     // 點擊黑色背景才關閉
     lightbox.addEventListener('click', function(e) {
-        if (e.target === lightbox || e.target.closest('.lightbox-close') || e.target.closest('.lightbox-close-button')) {
+        if (e.target === lightbox) {
             closeMenuLightbox();
         }
     });
@@ -432,28 +422,10 @@ document.addEventListener('DOMContentLoaded', function() {
             event.stopPropagation();
         });
     }
-    
-    // 關閉按鈕
-    if (closeButton) {
-        closeButton.addEventListener('click', function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            closeMenuLightbox();
-        });
-    }
-    
-    // X 按鈕
-    if (closeX) {
-        closeX.addEventListener('click', function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            closeMenuLightbox();
-        });
-    }
 
     // ESC 鍵關閉
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
+        if (e.key === 'Escape' && lightbox.style.display === 'flex') {
             closeMenuLightbox();
         }
     });

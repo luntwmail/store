@@ -186,139 +186,139 @@
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Lightbox 燈箱樣式 - v9.4.0 穩定版 */
+/* ========================================
+   Lightbox 終極自適應版 - v9.4.3 穩定版
+   ======================================== */
 .lightbox {
-    display: none; /* 預設隱藏 */
-    position: fixed !important; /* 強制固定 */
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    padding: 20px;
-    background-color: rgba(0, 0, 0, 0.95) !important; /* 加深背景 */
-    backdrop-filter: blur(10px); /* 磨砂玻璃 */
-    z-index: 99999 !important; /* 確保在最上層 */
+    display: none;
+    position: fixed !important;
+    inset: 0 !important;
+    background-color: rgba(0, 0, 0, 0.95) !important;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    z-index: 2000;
     
-    /* Flex 佈局確保完美居中 */
-    justify-content: center; /* 水平居中 */
-    align-items: center;     /* 垂直居中 */
-    
-    /* 防止背景滾動 */
-    overscroll-behavior: contain;
+    /* 核心修復:允許燈箱內容過長時滾動,並預留 Navbar 空間 */
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* 改為從頂部開始排列 */
+    padding: 100px 20px 40px; /* 頂部 100px 確保避開 Navbar 區域 */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
-/* 當設定為 display: flex 時生效 */
+/* 顯示時強制改為 flex */
+.lightbox[style*="display: block"],
 .lightbox[style*="display: flex"] {
     display: flex !important;
 }
 
 .lightbox-content {
-    display: block;
     max-width: 90vw !important;
-    max-height: 80vh !important;
+    height: auto !important; /* 讓長圖片自然延伸,不被強制壓縮 */
     width: auto;
-    height: auto;
-    object-fit: contain; /* 保持比例 */
-    border-radius: 8px;
-    border: 3px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
-    transform: scale(1);
-    transition: transform 0.3s ease;
-    margin: 0;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+    border: 2px solid rgba(255,255,255,0.1);
+    
+    /* 進場動畫 */
+    animation: lightboxPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-@keyframes zoomIn {
-    from { 
-        transform: scale(0.9); 
-        opacity: 0; 
-    }
-    to { 
-        transform: scale(1); 
-        opacity: 1; 
-    }
+@keyframes lightboxPop {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* 重新調整文字與按鈕,確保它們在圖片「下方」而不是疊在上面 */
+.lightbox-caption {
+    margin-top: 20px;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-align: center;
+    background: rgba(255,255,255,0.1);
+    padding: 5px 15px;
+    border-radius: 20px;
 }
 
 /* 右上角 X 關閉按鈕 */
 .lightbox-close {
-    position: fixed;
-    top: 20px;
-    right: 35px;
+    position: fixed !important;
+    top: 30px !important;
+    right: 30px !important;
+    width: 44px;
+    height: 44px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
     color: white;
-    font-size: 50px;
-    font-weight: 300;
-    transition: 0.3s;
-    cursor: pointer;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-    z-index: 10000;
-    line-height: 1;
-    width: 50px;
-    height: 50px;
+    font-size: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
+    cursor: pointer;
+    z-index: 2001;
+    transition: all 0.3s ease;
     backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 .lightbox-close:hover,
 .lightbox-close:focus {
-    color: var(--color-accent);
-    transform: scale(1.1);
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 112, 67, 0.8);
+    transform: scale(1.1) rotate(90deg);
 }
 
-/* 明顯的關閉按鈕 */
+/* 底部關閉按鈕 - 跟在文字後面,可被捲動 */
 .lightbox-close-button {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
+    margin-top: 20px;
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    transform: none !important;
     background: linear-gradient(135deg, var(--color-accent) 0%, #FF5722 100%);
     color: white;
-    padding: 14px 32px;
+    padding: 14px 40px !important;
     border-radius: 50px;
-    font-size: 1.1rem;
     font-weight: 700;
+    font-size: 1.1rem !important;
+    border: none;
+    box-shadow: 0 10px 20px rgba(255,112,67,0.3);
     cursor: pointer;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 
-        0 2px 0 rgba(255, 255, 255, 0.3) inset,
-        0 8px 24px rgba(255, 112, 67, 0.5),
-        0 4px 12px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-    z-index: 10001;
     display: flex;
     align-items: center;
-    gap: 10px;
-    /* 確保手機能點到 */
-    min-width: 120px;
-    min-height: 50px;
-    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
 }
 
 .lightbox-close-button:hover {
-    transform: translateX(-50%) translateY(-3px);
-    box-shadow: 
-        0 2px 0 rgba(255, 255, 255, 0.4) inset,
-        0 12px 32px rgba(255, 112, 67, 0.6),
-        0 6px 16px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px) !important;
+    box-shadow: 0 12px 24px rgba(255,112,67,0.4);
 }
 
 .lightbox-close-button:active {
-    transform: translateX(-50%) translateY(-1px);
+    transform: translateY(0) !important;
 }
 
-.lightbox-caption {
-    display: block;
-    text-align: center;
-    color: white;
-    font-size: 1.2rem;
-    font-weight: 600;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    margin-top: 20px;
-    width: 100%;
-    max-width: 800px;
+
+/* 行動版專屬調整:Navbar 較矮,縮小頂部間距 */
+@media (max-width: 768px) {
+    .lightbox {
+        padding-top: 80px;
+        padding-bottom: 30px;
+    }
+    .lightbox-close {
+        top: 20px !important;
+        right: 20px !important;
+    }
+    .lightbox-caption {
+        font-size: 1rem;
+    }
+    .lightbox-close-button {
+        padding: 12px 32px !important;
+        font-size: 1rem !important;
+    }
 }
 
 /* 響應式調整 */
