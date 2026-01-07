@@ -74,7 +74,7 @@
 /* ======================================== */
 
 /* ========================================
-   菜單圖片預覽卡片 - v9.3.7.1 優化版
+   菜單圖片預覽卡片 - v9.3.8 優化版
    ======================================== */
 .menu-preview-card {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 244, 238, 0.95) 100%);
@@ -87,7 +87,7 @@
         0 4px 12px rgba(0, 0, 0, 0.08);
     border: 2px solid rgba(255, 255, 255, 0.8);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    max-width: 600px; /* 限制最大寬度 */
+    max-width: 600px;
 }
 
 .menu-preview-card:hover {
@@ -186,47 +186,55 @@
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Lightbox 燈箱樣式 - 優化版 */
+/* Lightbox 燈箱樣式 - v9.4.0 穩定版 */
 .lightbox {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    padding: 40px 20px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(10px);
-    animation: fadeIn 0.3s ease;
+    display: none; /* 預設隱藏 */
+    position: fixed !important; /* 強制固定 */
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.95) !important; /* 加深背景 */
+    backdrop-filter: blur(10px); /* 磨砂玻璃 */
+    z-index: 99999 !important; /* 確保在最上層 */
+    
+    /* Flex 佈局確保完美居中 */
+    justify-content: center; /* 水平居中 */
+    align-items: center;     /* 垂直居中 */
+    
+    /* 防止背景滾動 */
+    overscroll-behavior: contain;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+/* 當設定為 display: flex 時生效 */
+.lightbox[style*="display: flex"] {
+    display: flex !important;
 }
 
 .lightbox-content {
-    margin: auto;
     display: block;
-    max-width: 800px; /* 限制最大寬度 */
+    max-width: 90vw !important;
+    max-height: 80vh !important;
     width: auto;
-    max-height: 85vh;
     height: auto;
-    border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-    animation: zoomIn 0.3s ease;
+    object-fit: contain; /* 保持比例 */
+    border-radius: 8px;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+    transform: scale(1);
+    transition: transform 0.3s ease;
+    margin: 0;
 }
 
 @keyframes zoomIn {
-    from {
-        transform: scale(0.8);
-        opacity: 0;
+    from { 
+        transform: scale(0.9); 
+        opacity: 0; 
     }
-    to {
-        transform: scale(1);
-        opacity: 1;
+    to { 
+        transform: scale(1); 
+        opacity: 1; 
     }
 }
 
@@ -243,12 +251,21 @@
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
     z-index: 10000;
     line-height: 1;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    backdrop-filter: blur(5px);
 }
 
 .lightbox-close:hover,
 .lightbox-close:focus {
     color: var(--color-accent);
     transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.2);
 }
 
 /* 明顯的關閉按鈕 */
@@ -274,6 +291,10 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    /* 確保手機能點到 */
+    min-width: 120px;
+    min-height: 50px;
+    justify-content: center;
 }
 
 .lightbox-close-button:hover {
@@ -289,15 +310,15 @@
 }
 
 .lightbox-caption {
-    margin: 20px auto;
     display: block;
-    width: 80%;
-    max-width: 700px;
     text-align: center;
     color: white;
     font-size: 1.2rem;
     font-weight: 600;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    margin-top: 20px;
+    width: 100%;
+    max-width: 800px;
 }
 
 /* 響應式調整 */
@@ -305,7 +326,7 @@
     .menu-preview-card {
         padding: 20px;
         margin-bottom: 30px;
-        max-width: 100%; /* 手機版全寬 */
+        max-width: 100%;
     }
     
     .preview-text h3 {
@@ -320,21 +341,32 @@
         padding: 20px 10px;
     }
     
+    /* 手機版：放大關閉按鈕 */
     .lightbox-close {
         top: 15px;
-        right: 20px;
+        right: 15px;
         font-size: 40px;
+        width: 50px;
+        height: 50px;
+        background: rgba(255, 255, 255, 0.2);
     }
     
     .lightbox-content {
-        max-width: 95%;
-        max-height: 80vh;
+        max-width: 95vw !important;
+        max-height: 80vh !important;
+        border-width: 2px;
     }
     
     .lightbox-close-button {
         bottom: 20px;
         padding: 12px 28px;
         font-size: 1rem;
+        min-height: 48px; /* 符合觸控標準 */
+    }
+    
+    .lightbox-caption {
+        font-size: 1rem;
+        margin-top: 15px;
     }
 }
 /* ======================================== */

@@ -370,59 +370,100 @@ if (document.readyState === 'loading') {
 }
 
 // ========================================
-// 菜單 Lightbox 功能 - v9.3.7.1
+// 菜單 Lightbox 功能 - v9.4.0 穩定版
 // ========================================
 
-// 開啟菜單燈箱
-function openMenuLightbox() {
+function openMenuLightbox(event, imgSrc) {
+    // 1. 核心修復：立即阻止所有預設行為與冒泡，防止頁面跳轉
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    
     const lightbox = document.getElementById('menuLightbox');
-    if (lightbox) {
-        lightbox.style.display = 'block';
-        document.body.style.overflow = 'hidden'; // 防止背景滾動
+    const lightboxImg = document.getElementById('lightboxImage');
+    
+    if (lightbox && lightboxImg) {
+        lightboxImg.src = imgSrc;
+        lightbox.style.display = 'flex'; // 強制使用 flex 居中
+        
+        // 2. 鎖定背景並記錄當前捲動位置，防止跳動
+        const scrollY = window.scrollY;
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${scrollY}px`;
+        document.body.style.width = '100%';
     }
 }
 
-// 關閉菜單燈箱
 function closeMenuLightbox() {
     const lightbox = document.getElementById('menuLightbox');
     if (lightbox) {
+        // 恢復捲動位置
+        const scrollY = document.body.style.top;
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+        
         lightbox.style.display = 'none';
-        document.body.style.overflow = 'auto'; // 恢復滾動
     }
 }
 
-// 按 ESC 鍵關閉燈箱
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape' || event.key === 'Esc') {
-        closeMenuLightbox();
-    }
-});
-
-// 點擊燈箱圖片或關閉按鈕時阻止關閉（只有點擊背景才關閉）
+// 監聽器與 ESC 鍵支援
 document.addEventListener('DOMContentLoaded', function() {
+    const lightbox = document.getElementById('menuLightbox');
     const lightboxImage = document.getElementById('lightboxImage');
-    const lightboxCaption = document.querySelector('.lightbox-caption');
     const closeButton = document.querySelector('.lightbox-close-button');
+    const closeX = document.querySelector('.lightbox-close');
     
-    // 阻止圖片點擊關閉
+    if (!lightbox) return;
+
+    // 點擊黑色背景才關閉
+    lightbox.addEventListener('click', function(e) {
+        if (e.target === lightbox || e.target.closest('.lightbox-close') || e.target.closest('.lightbox-close-button')) {
+            closeMenuLightbox();
+        }
+    });
+    
+    // 阻止圖片點擊事件向上傳播
     if (lightboxImage) {
         lightboxImage.addEventListener('click', function(event) {
+            event.preventDefault();
             event.stopPropagation();
         });
     }
     
-    // 阻止標題點擊關閉
-    if (lightboxCaption) {
-        lightboxCaption.addEventListener('click', function(event) {
-            event.stopPropagation();
-        });
-    }
-    
-    // 阻止關閉按鈕的點擊事件向上傳播（按鈕本身會觸發 closeMenuLightbox）
+    // 關閉按鈕
     if (closeButton) {
         closeButton.addEventListener('click', function(event) {
+            event.preventDefault();
             event.stopPropagation();
             closeMenuLightbox();
         });
+    }
+    
+    // X 按鈕
+    if (closeX) {
+        closeX.addEventListener('click', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            closeMenuLightbox();
+        });
+    }
+
+    // ESC 鍵關閉
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeMenuLightbox();
+        }
+    });
+    
+    // 手機端：防止觸控滑動時背景滾動
+    if (lightbox) {
+        lightbox.addEventListener('touchmove', function(event) {
+            if (event.target === lightbox) {
+                event.preventDefault();
+            }
+        }, { passive: false });
     }
 });
