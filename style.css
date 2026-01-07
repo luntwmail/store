@@ -187,24 +187,25 @@
 }
 
 /* ========================================
-   Lightbox 終極自適應版 - v9.4.3 穩定版
+   Lightbox 終極自適應版 - v9.4.6 修復版
    ======================================== */
 .lightbox {
     display: none;
     position: fixed !important;
     inset: 0 !important;
-    background-color: rgba(0, 0, 0, 0.95) !important;
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+    background-color: rgba(0, 0, 0, 0.96) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     z-index: 2000;
     
-    /* 核心修復:允許燈箱內容過長時滾動,並預留 Navbar 空間 */
+    /* 核心修復:確保內容可以垂直滾動,避免按鈕被擠掉 */
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* 改為從頂部開始排列 */
-    padding: 100px 20px 40px; /* 頂部 100px 確保避開 Navbar 區域 */
+    justify-content: flex-start; /* 改為從頂部開始排隊 */
+    padding: 100px 20px 40px; /* 頂部 100px 避開 Sticky Navbar */
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    gap: 0; /* 確保沒有額外間隙 */
 }
 
 /* 顯示時強制改為 flex */
@@ -214,40 +215,52 @@
 }
 
 .lightbox-content {
-    max-width: 90vw !important;
-    height: auto !important; /* 讓長圖片自然延伸,不被強制壓縮 */
-    width: auto;
+    /* 關鍵:嚴格限制高度為 65vh,確保下方絕對有空間放按鈕 */
+    max-width: 95vw !important;
+    max-height: 65vh !important;
+    min-height: 200px !important; /* 確保圖片有最小高度 */
+    width: auto !important;
+    height: auto !important;
     object-fit: contain;
     border-radius: 12px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.8);
     border: 2px solid rgba(255,255,255,0.1);
+    margin-bottom: 20px; /* 與標題的間距 */
     
-    /* 進場動畫 */
-    animation: lightboxPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* 防止被 Flexbox 壓縮 */
+    flex-shrink: 0;
+    flex-grow: 0;
+    
+    /* 確保圖片可見 */
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    
+    animation: lightboxEntrance 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-@keyframes lightboxPop {
+@keyframes lightboxEntrance {
     from { opacity: 0; transform: scale(0.95); }
     to { opacity: 1; transform: scale(1); }
 }
 
-/* 重新調整文字與按鈕,確保它們在圖片「下方」而不是疊在上面 */
 .lightbox-caption {
-    margin-top: 20px;
-    color: #fff;
+    color: white;
     font-size: 1.1rem;
     font-weight: 500;
+    margin-bottom: 20px; /* 與按鈕的間距 */
     text-align: center;
-    background: rgba(255,255,255,0.1);
-    padding: 5px 15px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 20px;
     border-radius: 20px;
+    flex-shrink: 0; /* 防止被壓縮 */
 }
 
-/* 右上角 X 關閉按鈕 */
+/* 右上角 X 關閉按鈕位置優化 */
 .lightbox-close {
     position: fixed !important;
-    top: 30px !important;
-    right: 30px !important;
+    top: 25px;
+    right: 25px;
     width: 44px;
     height: 44px;
     background: rgba(255,255,255,0.2);
@@ -270,10 +283,10 @@
     transform: scale(1.1) rotate(90deg);
 }
 
-/* 底部關閉按鈕 - 跟在文字後面,可被捲動 */
+/* 底部關閉按鈕 - 核心:改為相對定位,跟在內容後面 */
 .lightbox-close-button {
-    margin-top: 20px;
     position: relative !important;
+    margin-bottom: 40px;
     bottom: auto !important;
     left: auto !important;
     transform: none !important;
@@ -284,17 +297,18 @@
     font-weight: 700;
     font-size: 1.1rem !important;
     border: none;
-    box-shadow: 0 10px 20px rgba(255,112,67,0.3);
+    box-shadow: 0 10px 25px rgba(255,112,67,0.3);
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 8px;
     transition: all 0.3s ease;
+    flex-shrink: 0; /* 防止被壓縮 */
 }
 
 .lightbox-close-button:hover {
     transform: translateY(-2px) !important;
-    box-shadow: 0 12px 24px rgba(255,112,67,0.4);
+    box-shadow: 0 12px 30px rgba(255,112,67,0.4);
 }
 
 .lightbox-close-button:active {
@@ -302,22 +316,27 @@
 }
 
 
-/* 行動版專屬調整:Navbar 較矮,縮小頂部間距 */
+/* 行動版更嚴格的限制 */
 @media (max-width: 768px) {
     .lightbox {
         padding-top: 80px;
         padding-bottom: 30px;
     }
+    .lightbox-content {
+        max-height: 55vh !important; /* 手機版圖片更縮小,確保按鈕直接可見 */
+    }
     .lightbox-close {
-        top: 20px !important;
-        right: 20px !important;
+        top: 20px;
+        right: 20px;
     }
     .lightbox-caption {
         font-size: 1rem;
+        margin-bottom: 15px;
     }
     .lightbox-close-button {
         padding: 12px 32px !important;
         font-size: 1rem !important;
+        margin-bottom: 30px;
     }
 }
 
